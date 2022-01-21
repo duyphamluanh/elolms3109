@@ -443,4 +443,4 @@ $params = [
 
 // $PAGE->requires->js_call_amd('format_eloflexsections/eloflexsectionstest', 'init', array($params));
 $PAGE->requires->js_call_amd('format_eloflexsections/eloflexsections', 'init', array($params));
-$PAGE->requires->js('/course/format/eloflexsections/js/elo_w3.js');// arrange schedule - tab 3
+$PAGE->requires->js('/course/format/eloflexsections/js/elo_w3.js'); // arrange schedule - tab 3
