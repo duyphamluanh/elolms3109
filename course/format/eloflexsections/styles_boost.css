@@ -1,0 +1,5 @@
+/* stylelint-disable */
+.format-eloflexsections .course-content ul.eloflexsections li.section:target {
+        padding-top: 60px !important;
+        margin-top: -50px !important; /*nhien fix loi click den noi dung chuong*/
+}

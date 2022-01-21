@@ -1,0 +1,111 @@
+// Default Fordson theme variables
+
+$fpicon-width: 100px !default;
+$fpiconcreate-width: 150px !default;
+$fploginform: rgba(255, 255, 255, 0.9) !default;
+
+$headerimagepadding: 275px !default;
+$showheadergradient: 0 !default;
+
+$courseboxheight: 250px !default;
+
+$marketing1image: #fff !default;
+$marketing2image: #fff !default;
+$marketing3image: #fff !default;
+$marketing4image: #fff !default;
+$marketing5image: #fff !default;
+$marketing6image: #fff !default;
+$markettile-radius: 5px !default;
+$markettextbg: rgba(255, 255, 255, 0.8) !default;
+
+$border-radius: 4px !default;
+
+$learningcontentpadding: 400px !default;
+
+$blockwidthfordson: 300px !default;
+
+$drawer-bg: darken($body-bg, 5%) !default;
+$footer-bg: $gray-800 !default;
+$breadcrumb-bg: $primary !default;
+$breadcrumb-bg-hover: darken($breadcrumb-bg, 15%) !default;
+$breadcrumb-text-color: #ffffff !default;
+$breadcrumbdash: #ffffff !default;
+$breadcrumbdimmed: $gray-600 !default;
+
+$slideshowheight: 250px !default;
+
+$activityiconsize: 36px !default;
+$activityhover: #fff6ae !default;
+
+$gutterwidth: 2rem !default;
+
+$calendartoday: #fbffba !default;
+$custommenu-bg: #fff !default;
+
+$sectionnamehighlight : #43d0f3 !default;
+$dpsaccentcolor: #44d4a6 !default;
+$sectionactivitybkg: #fdfdfd !default;
+$sectionbkg: $sectionactivitybkg !default;
+$layout5imgoverlay: rgba(0,0,0,0.5) !default;
+$spectrum-base: #3fcbda !default;
+$elearningcontentbkg: rgba(255,255,255,0.6) !default;
+
+//Preset Checks for unique styling
+$spectrumpreset: 0 !default;
+$modernmoodlepreset: 0 !default;
+$perceptionpreset: 0 !default;
+
+$topnavbarbg: 						#265ea2 !default; // Elo: change
+$teachernavbarcolor: 				#f3e420 !default;
+$studentnavbarcolor: 				$topnavbarbg !default;
+$navbar-fhs-color:                  $white !default; // Elo: change
+$navbar-fhs-active-color:           $white !default; // Elo: change              
+$navbar-fhs-hover-color:            $white !default; // Elo: change
+$navbar-fhs-disabled-color:         $white !default; // Elo: change
+$navbar-fhs-toggler-border-color:	initial !default;
+$navbar-fhs-toggler-icon-bg:		initial !default;
+
+$perceptionfontsize:    			1.25rem !default;
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//  Elo: SCSS variables
+/////////////////////////////////////////////////////////////////////////////////
+$maunen1 :              #0C1B3D !default;
+$maunen2:               $white  !default;
+
+$mauchu1:               $white  !default;
+$mauchu2:               #121C33 !default;
+
+$maubgform1:            rgba(5,19,47,.7) !default;
+$mautextform1:          #478FC7 !default;
+$maulink1:              #FF9100 !default;
+
+$maubgform2:            #F0F0F0 !default;
+$mautextform2:          #8C8C8C !default;
+$maulink2:              #29A4FF !default;
+
+$loginbuttonbackground:     #2B3990 !default;
+$maubuttonhocthu:       #D8881D !default;
+$mauborder:             #2C4D8F !default;
+$mauchuinput:           rgba(5,19,47,.7) !default;
+
+$loginbuttonbackgroundhover:              #347CAD !default;
+$sans-serif-login:      'Roboto', sans-serif ;
+
+$primary-color-bg-login:                $maunen2;
+$primary-color-text-login:              $mauchu2;
+
+$primary-color-bg-form-login:           $maubgform2;
+$primary-color-placeholder-form-login:  $mautextform2;
+$primary-color-text-link-login:         $maulink2;
+
+$primary-font-login:                $sans-serif-login;
+$secondary-font-login:              $font-family-sans-serif !default;
+
+@mixin size-login($font-size, $line-height,$font-weight){
+    font-weight:    $font-weight;
+    line-height:    $line-height;
+    font-size:      $font-size;   
+}
+

@@ -1,0 +1,23 @@
+// $course = '';
+// $course .= '<div id="accordion_'.$teacher->id.'">';
+// foreach($teacher_courses as $teacher_course){
+//     $course .='<div class="card bg-dark">
+//         <div class="" id="heading_'.$teacher->id.'_'.$teacher_course->id.'">
+//             <h5 class="mb-0">
+//                 <button class="btn collapsed text-white w-100" data-toggle="collapse" data-target="#collapse_'.$teacher->id.'_'.$teacher_course->id.'" aria-expanded="false" aria-controls="collapse_'.$teacher->id.'_'.$teacher_course->id.'">
+//                 '.$teacher_course->fullname.'
+//                 </button>
+//             </h5>
+//         </div>
+//         <div id="collapse_'.$teacher->id.'_'.$teacher_course->id.'" class="collapse" aria-labelledby="heading_'.$teacher->id.'_'.$teacher_course->id.'" data-parent="#accordion_'.$teacher->id.'">
+//             <div class="px-2 py-3">
+//                 '.$teacher_course->fullname.' activites.
+//             </div>
+//         </div>
+//     </div>';
+// }
+// $course .= '</div>';
+
+
+
+

@@ -1,0 +1,916 @@
+/* stylelint-disable */
+/* ELO: */
+/* SCROLLBAR */
+/* Scrollbar - Firefox */
+html {
+    scrollbar-color: #265ea2 #FFFFFF;
+}
+
+.format-eloflexsections #nav-drawer {
+    scrollbar-color: #347CAD #FFFFFF;
+    scrollbar-width: thin;
+}
+
+.elo_course_activitive_table tbody {
+    scrollbar-color: #265ea2 #FFFFFF;
+}
+
+/* Scrollbar - Chrome */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #265ea2;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Scrollbar - Chrome - Navigation*/
+.format-eloflexsections #nav-drawer::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+}
+
+.format-eloflexsections #nav-drawer::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: transparent;
+}
+
+.format-eloflexsections #nav-drawer::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #265ea2;
+}
+
+/* Scrollbar - Chrome - Activitive table*/
+.elo_course_activitive_table tbody::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+}
+
+.elo_course_activitive_table tbody::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.elo_course_activitive_table tbody::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #347CAD;
+}
+
+.elo_course_activitive_table tbody::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: transparent;
+}
+
+.elo_course_activitive_table tbody::-webkit-scrollbar-button {
+    width: 0;
+    height: 5px;
+    display: block;
+}
+
+/*Page Content - Region main*/
+#page-course-view-eloflexsections #region-main {
+    border: 0;
+    padding: 0rem;
+}
+
+/* Elo Flex Sections Tabs */
+
+#eloflexsectionsTab.nav-tabs {
+    -webkit-margin-start: 0rem;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-bottom: 1px solid #1177d1;
+}
+
+#eloflexsectionsTab.nav-tabs .nav-item .nav-link {
+    color: #313131;
+    background: transparent;
+    text-decoration: none;
+    box-shadow: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+#eloflexsectionsTab.nav-tabs .nav-item .nav-link:hover {
+    border-color: transparent;
+}
+
+#eloflexsectionsTab.nav-tabs .nav-item .nav-link:hover h4 {
+    border-color: transparent;
+    color: #0f6fc5;
+}
+
+#eloflexsectionsTab.nav-tabs .nav-item:first-child .nav-link {
+    border-top-left-radius: 0px;
+    border-left-width: 0px;
+}
+
+#eloflexsectionsTab.nav-tabs .nav-item .nav-link.active {
+    color: #0f6fc5;
+    background: #fff;
+    /* border: 1px solid rgba(0,0,0,.125); */
+    border: 1px solid #347cad;
+    border-top: 3px solid #347cad;
+    border-bottom: 1px solid #fff;
+}
+
+#eloflexsectionsTab.nav-tabs .nav-item:first-child .nav-link.active {
+    border-left: 0px solid rgba(0, 0, 0, .125);
+}
+
+/* Elo Flex Sections Tabs Responsive*/
+@media (max-width: 767.98px) {
+    #eloflexsectionsTab.nav-tabs {
+        background-color: #ffffff;
+        padding: 0;
+    }
+    #eloflexsectionsTab.nav-tabs .nav-item .nav-link {
+        margin: 0;
+    }
+    #eloflexsectionsTab.nav-tabs .nav-item:last-child .nav-link {
+        border-top-right-radius: 0px;
+        border-right-width: 0px;
+    }
+}
+
+@media (max-width: 604.98px) {
+    #eloflexsectionsTab.nav-tabs {
+        border-bottom: 1px solid rgba(0, 0, 0, .125);
+    }
+    #eloflexsectionsTab.nav-tabs {
+        flex-direction: column;
+    }
+    .maincalendar .p-4 {
+        padding: 0.5rem !important;
+    }
+    
+    #eloflexsectionsTab.nav-tabs .nav-item .nav-link.active {
+        border-top: 3px solid #347cad;
+        border-bottom: 1px solid #347cad;
+        border-radius: 4px;
+    }
+
+    #eloflexsectionsTab.nav-tabs .nav-item:first-child .nav-link.active {
+        border-left: 1px solid #347cad;
+    }
+
+    #eloflexsectionsTab.nav-tabs .nav-item:last-child .nav-link.active {
+        border-right: 1px solid #347cad;
+    }
+
+    #eloflexsectionsTab.nav-tabs .nav-item .nav-link h4{
+        font-weight: bold;
+    }
+    #calendarviewdropdown{
+        display: none;
+    }
+}
+
+/*  */
+#page-course-view-eloflexsections #region-main .tab-content {
+    border: 1px solid #dee2e6;
+    border-top: 0;
+    background: white;
+    padding-top: 20px;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.section {
+    list-style: none;
+    margin: 3px 0 2px .5em;
+    padding-left: 5px;
+    padding-right: 0;
+}
+
+.course-content ul.eloflexsections li.movehere {
+    list-style: none;
+    margin: 3px 0 2px 1em;
+}
+
+.dir-rtl.format-eloflexsections .course-content ul.eloflexsections li.section,
+.dir-rtl.course-content ul.eloflexsections li.movehere {
+    margin: 3px 1em 2px 0;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections-level-0>li.section {
+    margin-left: 0;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections-level-0>li.movehere {
+    margin-left: 0;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.section.main {
+    border: none;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections-level-1>li.section.main {
+    /*border: #d2d6de solid 1px;*/
+    margin-left: 0;
+    padding-right: 5px;
+}
+
+.eloflexsections .eloflexsections-level-0 {
+    margin-left: 0rem;
+    margin-right: 0rem;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.section .controls img {
+    padding-left: 0.3em;
+    padding-right: 0.3em
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.section .availabilityinfo {
+    padding-bottom: .5em;
+    padding-left: 1rem;
+    font-size: 14px;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.section ul.section {
+    margin-left: 10px;
+    margin-right: 18px;
+}
+
+.eloflexsections .eloflexsections-level-3,
+.eloflexsections .eloflexsections-level-4,
+.eloflexsections .eloflexsections-level-5 {
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.section>.content>.summary {
+    margin-left: 0;
+    padding-left: 0.2em;
+}
+
+/* Overwrite bootstrapbase styles */
+.format-eloflexsections .course-content ul.eloflexsections .controls a.hide,
+.format-eloflexsections .course-content ul.eloflexsections .controls a.show {
+    display: inline;
+}
+
+/* hidden section */
+.format-eloflexsections .course-content li.section.hidden>.content>h3.sectionname,
+.format-eloflexsections .course-content li.section.hidden>.content>h3.sectionname a,
+.format-eloflexsections .course-content li.section.hidden>.content>.summary,
+.format-eloflexsections .course-content li.section.hidden .addresourcemodchooser a,
+.format-eloflexsections .course-content li.section.hidden a.addsection {
+    color: #AAAAAA;
+}
+
+/* add extra borders in editing mode */
+.format-eloflexsections.editing .course-content ul.eloflexsections li.section.main {
+    border: #DDDDDD solid 1px;
+    margin-bottom: 8rem;
+    border-radius: 4px;
+    padding-top: 15px;
+
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.section {
+    list-style: none;
+    margin: 3px 0 2px 0;
+    padding-left: 0px;
+    padding-right: 0;
+}
+
+.format-eloflexsections.editing .course-content ul.eloflexsections li.section.main#section-0 {
+    border: none;
+}
+
+/* moving section */
+.format-eloflexsections .course-content ul.eloflexsections li.section.ismoving {
+    background: #EEEEEE;
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.movehere>img {
+    padding-left: 5px;
+}
+
+.format-eloflexsections .course-content div.cancelmoving {
+    margin: 3px;
+    padding: 5px;
+    background: yellow;
+    border: 1px solid black;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.format-eloflexsections .jumpmenu {
+    text-align: center;
+}
+
+.format-eloflexsections .header.backto .backto-text {
+    margin-left: 10px;
+}
+
+.course-content ul.section {
+    /*background-color: #fff;*/
+    border-radius: 4px;
+}
+
+/**************************************** Eloflexsections page content tab ->********************************************/
+input[type='checkbox'].toggle {
+    display: none;
+}
+
+.lbl-toggle {
+    font-family: Arial, verdana, sans-serif;
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: none;
+    text-align: left;
+    padding: 10px 5px;
+    color: #3f3f3f;
+    background: rgba(200, 236, 239, .2);
+    background: transparent;
+    cursor: pointer;
+    border-radius: 0px;
+    transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -ms-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    -webkit-transition: all 0.25s ease-out;
+    margin-bottom: 0rem;
+    border: none;
+}
+
+.eloflexsections-level-1 .elo_collapsetitle:before {
+    display: block;
+    font-family: "FontAwesome";
+    content: '\f0d7';
+    float: left;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #0066cc;
+}
+
+.eloflexsections-level-2 .elo_collapsetitle:before {
+    color: #3f3f3f;
+}
+
+.elo_collapsetitle:hover {
+    color: #0066cc;
+}
+
+
+.elo_collapsetitle:before {
+    display: block;
+    font-family: "FontAwesome";
+    content: '\f0d7';
+    float: left;
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+/* ok */
+.elo_collapsetitle.collapsed:before {
+    content: '\f0da';
+}
+
+
+.elosectiontitle-0 {
+    display: block;
+    padding-left: 10px !important;
+    padding-right: 18px !important;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: none;
+    color: #0066cc;
+}
+
+.elosectiontitle-1 {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: none;
+    color: #0066cc;
+    padding-left: 10px;
+}
+
+.elosectiontitle-2 {
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: none;
+    color: #3f3f3f;
+    padding-left: 10px;
+}
+
+.elosectiontitle-3,
+.elosectiontitle-4,
+.elosectiontitle-5 {
+    /*    display: inline-block;*/
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: none;
+    color: #3f3f3f;
+    padding-left: 10px;
+}
+
+.elosectionsummary-0 p {
+
+    font-size: 14px;
+    text-transform: none;
+    color: #3f3f3f;
+    padding-left: 2rem;
+}
+
+.elosectionsummary-1 p {
+
+    font-size: 14px;
+    text-transform: none;
+    color: #3f3f3f;
+}
+
+.elosectionsummary-2 p {
+
+    font-size: 14px;
+    text-transform: none;
+    color: #3f3f3f;
+    /*padding-left: 16px;*/
+}
+
+.elosectionsummary-3 p {
+
+    font-size: 14px;
+    text-transform: none;
+    color: #3f3f3f;
+}
+
+.elosectionsummary-4 p {
+
+    font-size: 14px;
+    text-transform: none;
+    color: #3f3f3f;
+}
+
+.elosectionsummary-5 p {
+
+    font-size: 14px;
+    text-transform: none;
+    color: #3f3f3f;
+    padding-left: 1rem;
+}
+
+.elosectionsummary-1,
+.elosectionsummary-2,
+.elosectionsummary-3,
+.elosectionsummary-4,
+.elosectionsummary-5 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.eloflexsections.eloflexsections-level-1,
+.eloflexsections .eloflexsections-level-2 {
+    padding-left: 10px !important;
+    padding-right: 18px !important;
+}
+
+.format-eloflexsections .section-modchooser {
+    padding: 1rem 2rem 1rem 1rem !important;
+}
+
+.format-eloflexsections span.instancename {
+    font-size: 1.1em;
+}
+
+.format-eloflexsections .section .activity .contentafterlink {
+    margin-left: 2.8rem !important;
+}
+
+.format-eloflexsections .path-course-view .unread {
+    margin-left: 2.8rem !important;
+}
+
+.format-eloflexsections span.instancename {
+    font-size: 14px;
+}
+
+.format-eloflexsections img.activityicon {
+    height: 18px !important;
+    width: 18px !important;
+}
+
+.format-eloflexsections .section.img-text {
+    border: 1px solid #c9c9c9;
+    background: #f0f0f0 !important;
+}
+
+/* Elo: Duy */
+.format-eloflexsections .course-content ul.eloflexsections li.section ul.section {
+    padding: 1rem
+}
+
+.format-eloflexsections .course-content ul.eloflexsections li.section ul.section .activity {
+    border-bottom: 1px dashed #dee2e6;
+}
+
+/* // *****************************Nhien elo Lich trinh hoc tap bang so 3********** */
+.elo_course_activitive_table thead {
+    background: #347CAD;
+    overflow-y: scroll;
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    color: white;
+}
+
+.elo_course_activitive_table thead tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.elo_course_activitive_table tbody {
+    max-height: 500px;
+    overflow-y: scroll;
+    display: block;
+    width: 100%;
+}
+
+.elo_course_activitive_table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.elo_course_activitive_table td {
+    text-align: left;
+}
+
+.elo_course_activitive_table th {
+    text-align: left;
+    border: none !important;
+    border-right: 2px solid white !important;
+}
+
+.elo_course_activitive_table td:nth-child(1) {
+    width: 40%;
+    float: left;
+}
+
+.elo_course_activitive_table th:nth-child(1) {
+    width: 40%;
+    float: left;
+}
+
+.elo_course_activitive_table td:nth-child(2) {
+    width: 40%;
+    float: left;
+}
+
+.elo_course_activitive_table th:nth-child(2) {
+    width: 40%;
+    float: left;
+}
+
+.elo_course_activitive_table td:nth-child(3) {
+    width: 20%;
+    float: left;
+}
+
+.elo_course_activitive_table th:nth-child(3) {
+    width: 20%;
+    float: left;
+    border-right: 0px solid white !important;
+}
+
+.elo_course_activitive_table td,
+.elo_course_activitive_table th {
+    border: 1px solid #DDDDDD;
+    /* padding: 8px; */
+}
+
+.elo_course_activitive_table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.elo_course_activitive_table tr:hover {
+    background-color: rgba(0.5, 0.5, 0.5, 0.1);
+    transition: all 0.3s ease 0.1s;
+}
+
+.fa-unsorted::before,
+.fa-sort::before {
+    content: "\f0dc";
+}
+
+.elo-admin-announcement-to-visitor {
+    margin-bottom: 20px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    border: 1px solid #DDDDDD;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.elo-dev-admin-announcement-to-visitor {
+    display: block;
+    padding: 1rem;
+    height: 350px;
+    background-size: cover;
+
+}
+
+#region-main>.card {
+    overflow-x: auto;
+    overflow-y: visible;
+    min-height: 10rem;
+}
+
+/* ***************************Nhien elo Lich trinh hoc tap bang so 2************ */
+
+.elo_upcomming_calendar_block .calendar_event_user {
+    background-color: white;
+    padding-left: 1rem;
+}
+
+.btn-secondary {
+    background-color: #4790CD;
+    color: white;
+    border: 1px solid #4790CD;
+    display: block;
+}
+
+.eloheightcontainer {
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.eloheightcontainer .btn-secondary {
+    background-color: #347cad;
+    color: white;
+    border: 1px solid #347cad;
+    display: block;
+}
+
+.eloheightcontainer .hovercoursecalendar:hover {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.eloheightcontainer .calendartable {
+    width: 98%;
+    margin: 10px auto;
+    table-layout: fixed;
+}
+
+.eloheightcontainer .calendartable .header {
+    background-color: #347cad;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 15px;
+    padding: 7px 0;
+    text-transform: uppercase;
+}
+
+.eloheightcontainer th,
+.eloheightcontainer td {
+    width: 14%;
+    vertical-align: top;
+    text-align: center;
+    border: 0;
+}
+
+.eloheightcontainer .calendar-controls .previous,
+.eloheightcontainer .calendar-controls .next,
+.eloheightcontainer .calendar-controls .current {
+    display: block;
+    float: left;
+    width: 12%;
+}
+
+.eloheightcontainer .calendar-controls .previous {
+    text-align: left;
+    border: 1px solid transparent;
+}
+
+.eloheightcontainer .calendar-controls .current {
+    text-align: center;
+    width: 76%;
+    padding-top: 0 !important;
+    font-size: 20px;
+}
+
+.eloheightcontainer .calendar-controls .next {
+    text-align: right;
+    border: 1px solid transparent;
+}
+
+.eloheightcontainer .calendar-controls .drop-target {
+    box-sizing: border-box;
+    border: 1px dashed #007bff;
+}
+
+.eloheightcontainer .filters table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    width: 100%;
+}
+
+.eloheightcontainer .bottom {
+    text-align: center;
+    padding: 5px 0 0 0;
+}
+
+.eloheightcontainer .calendarmonth {
+    width: 98%;
+    margin: 10px auto;
+    box-shadow: 0 0 5px 0 #e8e8e8;
+}
+
+.eloheightcontainer .calendarmonth ul {
+    margin: 0;
+    padding: 0;
+}
+
+.eloheightcontainer .calendarmonth ul li {
+    list-style-type: none;
+}
+
+.eloheightcontainer .calendarmonth ul li>a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    display: inline-block;
+}
+
+.eloheightcontainer .calendarmonth ul li>a:hover {
+    text-decoration: none;
+}
+
+.eloheightcontainer .calendarmonth ul li>a:hover .eventname {
+    text-decoration: underline;
+}
+
+.eloheightcontainer .calendarmonth ul li .icon {
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    vertical-align: initial;
+}
+
+.eloheightcontainer .calendarmonth ul li .badge.badge-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    vertical-align: middle;
+}
+
+.eloheightcontainer .calendarmonth ul li .badge.badge-circle.calendar_event_category {
+    background-color: #d8bfd8;
+}
+
+.eloheightcontainer .calendarmonth ul li .badge.badge-circle.calendar_event_course {
+    background-color: #ffd3bd;
+}
+
+.eloheightcontainer .calendarmonth ul li .badge.badge-circle.calendar_event_site {
+    background-color: #d6f8cd;
+}
+
+.eloheightcontainer .calendarmonth ul li .badge.badge-circle.calendar_event_group {
+    background-color: #fee7ae;
+}
+
+.eloheightcontainer .calendarmonth ul li .badge.badge-circle.calendar_event_user {
+    background-color: #dce7ec;
+}
+
+.eloheightcontainer .calendarmonth td {
+    height: 5em;
+}
+
+.eloheightcontainer .calendarmonth .clickable:hover {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.eloheightcontainer .calendar-controls .previous,
+.eloheightcontainer .calendar-controls .next {
+    width: 30%;
+}
+
+.eloheightcontainer .calendar-controls .current {
+    width: 39.95%;
+}
+
+.eloheightcontainer .controls {
+    width: 98%;
+    margin: 10px auto;
+}
+
+.eloheightcontainer .calendar_event_category:hover a,
+.eloheightcontainer .calendar_event_course:hover a,
+.eloheightcontainer .calendar_event_site:hover a,
+.eloheightcontainer .calendar_event_group:hover a,
+.eloheightcontainer .calendar_event_user:hover a {
+    text-decoration: underline;
+}
+
+.eloheightcontainer .calendar_event_category {
+    border-color: #d8bfd8;
+}
+
+.eloheightcontainer .calendar_event_course {
+    border-color: #ffd3bd;
+}
+
+.eloheightcontainer .calendar_event_site {
+    border-color: #d6f8cd;
+}
+
+.eloheightcontainer .calendar_event_group {
+    border-color: #fee7ae;
+}
+
+.eloheightcontainer .calendar_event_user {
+    border-color: #dce7ec;
+}
+
+.eloheightcontainer .calendartable td,
+.eloheightcontainer .calendartable li {
+    padding: 0 4px 4px 4px;
+}
+
+.eloheightcontainer .calendartable li {
+    text-align: left;
+}
+
+.eloheightcontainer .header {
+    overflow: hidden;
+}
+
+.eloheightcontainer .header .buttons {
+    float: right;
+}
+
+.eloheightcontainer .event .card-header img {
+    vertical-align: baseline;
+}
+
+.eloheightcontainer .singlebutton button {
+    display: none;
+}
+
+.maincalendar .bottom {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.course-content .current::before {
+    border-left: none !important;
+}
+
+#elosummary ul {
+    list-style-type: none;
+}
+
+#elosummary ul li {
+    line-height: 36px;
+}
+
+#elosummary span {
+    color: #347cad;
+    font-weight: 700;
+}
+
+
+/* Elo Activitives Table Responsive */
+.flexbox {
+    display: flex !important;
+    overflow: hidden;
+}
+
+.flexbox .col:nth-child(1) {
+    background: #ccc;
+    order: 1;
+}
+
+.flexbox .col:nth-child(2) {
+    background: #eee;
+    order: 0;
+}
+
+.flexbox .col:nth-child(3) {
+    background: #eee;
+    order: 2;
+}
