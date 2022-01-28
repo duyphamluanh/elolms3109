@@ -59,4 +59,17 @@
 #page-report-progress-index .modicon {
     padding-top: 5px;
 }
+
 /*rtl:end:ignore*/
+
+#page-report-progress-index .rotated-text {
+    margin-left: -10px;
+}
+
+#page-report-progress-index table.dataTable thead .sorting,
+#page-report-progress-index table.dataTable thead .sorting_asc,
+#page-report-progress-index table.dataTable thead .sorting_desc,
+#page-report-progress-index table.dataTable thead .sorting_asc_disabled,
+#page-report-progress-index table.dataTable thead .sorting_desc_disabled {
+    background-position: bottom right;
+}

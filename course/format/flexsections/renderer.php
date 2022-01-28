@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot.'/course/format/renderer.php');
+require_once($CFG->dirroot . '/course/format/renderer.php');
 
 /**
  * Renderer for flexsections format.
@@ -32,7 +32,8 @@ require_once($CFG->dirroot.'/course/format/renderer.php');
  * @copyright 2012 Marina Glancy
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_flexsections_renderer extends plugin_renderer_base {
+class format_flexsections_renderer extends plugin_renderer_base
+{
     /** @var core_course_renderer Stores instances of core_course_renderer */
     protected $courserenderer = null;
 
@@ -42,7 +43,8 @@ class format_flexsections_renderer extends plugin_renderer_base {
      * @param moodle_page $page
      * @param string $target
      */
-    public function __construct(moodle_page $page, $target) {
+    public function __construct(moodle_page $page, $target)
+    {
         parent::__construct($page, $target);
         $this->courserenderer = $page->get_renderer('core', 'course');
     }
@@ -55,7 +57,8 @@ class format_flexsections_renderer extends plugin_renderer_base {
      * @param bool $supresslink
      * @return string HTML to output.
      */
-    public function section_title($section, $course, $supresslink = false) {
+    public function section_title($section, $course, $supresslink = false)
+    {
         global $CFG;
         if ((float)$CFG->version >= 2016052300) {
             // For Moodle 3.1 or later use inplace editable for displaying section name.
@@ -78,10 +81,17 @@ class format_flexsections_renderer extends plugin_renderer_base {
      * @param stdClass $section The course_section entry from DB
      * @return string HTML to output.
      */
-    protected function format_summary_text($section) {
+    protected function format_summary_text($section)
+    {
         $context = context_course::instance($section->course);
-        $summarytext = file_rewrite_pluginfile_urls($section->summary, 'pluginfile.php',
-            $context->id, 'course', 'section', $section->id);
+        $summarytext = file_rewrite_pluginfile_urls(
+            $section->summary,
+            'pluginfile.php',
+            $context->id,
+            'course',
+            'section',
+            $section->id
+        );
 
         $options = new stdClass();
         $options->noclean = true;
@@ -97,7 +107,8 @@ class format_flexsections_renderer extends plugin_renderer_base {
      * @param int $sr section to return to (for building links)
      * @param int $level nested level on the page (in case of 0 also displays additional start/end html code)
      */
-    public function display_section($course, $section, $sr, $level = 0) {
+    public function display_section($course, $section, $sr, $level = 0)
+    {
         $course = course_get_format($course)->get_course();
         $section = course_get_format($course)->get_section($section);
         $context = context_course::instance($course->id);
@@ -122,12 +133,16 @@ class format_flexsections_renderer extends plugin_renderer_base {
                 $this->display_insert_section_here($course, $section->parent, $section->section, $sr);
             }
         }
-        echo html_writer::start_tag('li',
-                array('class' => "section main".
-                    ($movingsection === $sectionnum ? ' ismoving' : '').
-                    (course_get_format($course)->is_section_current($section) ? ' current' : '').
+        echo html_writer::start_tag(
+            'li',
+            array(
+                'class' => "section main" .
+                    ($movingsection === $sectionnum ? ' ismoving' : '') .
+                    (course_get_format($course)->is_section_current($section) ? ' current' : '') .
                     (($section->visible && $contentvisible) ? '' : ' hidden'),
-                    'id' => 'section-'.$sectionnum));
+                'id' => 'section-' . $sectionnum
+            )
+        );
 
         // Display controls except for expanded/collapsed.
         /** @var format_flexsections_edit_control[] $controls */
@@ -150,13 +165,15 @@ class format_flexsections_renderer extends plugin_renderer_base {
         // Display section name and expanded/collapsed control.
         if ($sectionnum && ($title = $this->section_title($sectionnum, $course, ($level == 0) || !$contentvisible))) {
             if ($collapsedcontrol) {
-                $title = $this->render($collapsedcontrol). $title;
+                $title = $this->render($collapsedcontrol) . $title;
             }
             echo html_writer::tag('h3', $title, array('class' => 'sectionname'));
         }
 
-        echo $this->section_availability_message($section,
-            has_capability('moodle/course:viewhiddensections', $context));
+        echo $this->section_availability_message(
+            $section,
+            has_capability('moodle/course:viewhiddensections', $context)
+        );
 
         // Display section description (if needed).
         if ($contentvisible && ($summary = $this->format_summary_text($section))) {
@@ -208,7 +225,8 @@ class format_flexsections_renderer extends plugin_renderer_base {
      * @param null|int|section_info $before number of section before which we want to insert (or null if in the end)
      * @param null $sr
      */
-    protected function display_insert_section_here($courseorid, $parent, $before = null, $sr = null) {
+    protected function display_insert_section_here($courseorid, $parent, $before = null, $sr = null)
+    {
         if ($control = course_get_format($courseorid)->get_edit_control_movehere($parent, $before, $sr)) {
             echo $this->render($control);
         }
@@ -220,41 +238,74 @@ class format_flexsections_renderer extends plugin_renderer_base {
      * @param format_flexsections_edit_control $control
      * @return string
      */
-    protected function render_format_flexsections_edit_control(format_flexsections_edit_control $control) {
+    protected function render_format_flexsections_edit_control(format_flexsections_edit_control $control)
+    {
         if (!$control) {
             return '';
         }
         if ($control->actionname === 'movehere') {
-            $icon = new pix_icon('movehere', $control->text, 'moodle',
-                ['class' => 'movetarget', 'title' => $control->text]);
+            $icon = new pix_icon(
+                'movehere',
+                $control->text,
+                'moodle',
+                ['class' => 'movetarget', 'title' => $control->text]
+            );
             $action = new action_link($control->url, $icon, null, ['data-action' => $control->actionname]);
             return html_writer::tag('li', $this->render($action), ['class' => 'movehere']);
         } else if ($control->actionname === 'cancelmovingsection' || $control->actionname === 'cancelmovingactivity') {
-            return html_writer::tag('div', html_writer::link($control->url, $control->text),
-                    array('class' => 'cancelmoving '.$control->actionname));
+            return html_writer::tag(
+                'div',
+                html_writer::link($control->url, $control->text),
+                array('class' => 'cancelmoving ' . $control->actionname)
+            );
         } else if ($control->actionname === 'addsection') {
             $icon = new pix_icon('t/add', '', 'moodle', ['class' => 'iconsmall']);
-            $text = $this->render($icon). html_writer::tag('span', $control->text,
-                    ['class' => $control->actionname.'-text']);
+            $text = $this->render($icon) . html_writer::tag(
+                'span',
+                $control->text,
+                ['class' => $control->actionname . '-text']
+            );
             $action = new action_link($control->url, $text, null, ['data-action' => $control->actionname]);
             return html_writer::tag('div', $this->render($action), ['class' => 'mdl-right']);
         } else if ($control->actionname === 'backto') {
             $icon = new pix_icon('t/up', '', 'moodle');
-            $text = $this->render($icon). html_writer::tag('span', $control->text,
-                    ['class' => $control->actionname.'-text']);
-            return html_writer::tag('div', html_writer::link($control->url, $text),
-                    array('class' => 'header '.$control->actionname));
-        } else if ($control->actionname === 'settings' || $control->actionname === 'marker' ||
-                $control->actionname === 'marked') {
-            $icon = new pix_icon('i/'. $control->actionname, $control->text, 'moodle',
-                ['class' => 'iconsmall', 'title' => $control->text]);
-        } else if ($control->actionname === 'move' || $control->actionname === 'expanded' || $control->actionname === 'collapsed'
-                || $control->actionname === 'hide' || $control->actionname === 'show' || $control->actionname === 'delete') {
-            $icon = new pix_icon('t/'. $control->actionname, $control->text, 'moodle',
-                ['class' => 'iconsmall', 'title' => $control->text]);
+            $text = $this->render($icon) . html_writer::tag(
+                'span',
+                $control->text,
+                ['class' => $control->actionname . '-text']
+            );
+            return html_writer::tag(
+                'div',
+                html_writer::link($control->url, $text),
+                array('class' => 'header ' . $control->actionname)
+            );
+        } else if (
+            $control->actionname === 'settings' || $control->actionname === 'marker' ||
+            $control->actionname === 'marked'
+        ) {
+            $icon = new pix_icon(
+                'i/' . $control->actionname,
+                $control->text,
+                'moodle',
+                ['class' => 'iconsmall', 'title' => $control->text]
+            );
+        } else if (
+            $control->actionname === 'move' || $control->actionname === 'expanded' || $control->actionname === 'collapsed'
+            || $control->actionname === 'hide' || $control->actionname === 'show' || $control->actionname === 'delete'
+        ) {
+            $icon = new pix_icon(
+                't/' . $control->actionname,
+                $control->text,
+                'moodle',
+                ['class' => 'iconsmall', 'title' => $control->text]
+            );
         } else if ($control->actionname === 'mergeup') {
-            $icon = new pix_icon('mergeup', $control->text, 'format_flexsections',
-                ['class' => 'iconsmall', 'title' => $control->text]);
+            $icon = new pix_icon(
+                'mergeup',
+                $control->text,
+                'format_flexsections',
+                ['class' => 'iconsmall', 'title' => $control->text]
+            );
         }
         if (isset($icon)) {
             if ($control->url) {
@@ -267,7 +318,7 @@ class format_flexsections_renderer extends plugin_renderer_base {
             }
         }
         // Unknown control.
-        return ' '. html_writer::link($control->url, $control->text, ['data-action' => $control->actionname]). '';
+        return ' ' . html_writer::link($control->url, $control->text, ['data-action' => $control->actionname]) . '';
     }
 
     /**
@@ -284,7 +335,8 @@ class format_flexsections_renderer extends plugin_renderer_base {
      * @param bool $canviewhidden True if user can view hidden sections
      * @return string HTML to output
      */
-    protected function section_availability_message($section, $canviewhidden) {
+    protected function section_availability_message($section, $canviewhidden)
+    {
         global $CFG;
         $o = '';
         if (!$section->visible) {
@@ -300,7 +352,9 @@ class format_flexsections_renderer extends plugin_renderer_base {
                 // Note: We only get to this function if availableinfo is non-empty,
                 // so there is definitely something to print.
                 $formattedinfo = \core_availability\info::format_info(
-                    $section->availableinfo, $section->course);
+                    $section->availableinfo,
+                    $section->course
+                );
                 $o .= $this->courserenderer->availability_info($formattedinfo, 'isrestricted');
             }
         } else if ($canviewhidden && !empty($CFG->enableavailability)) {
@@ -309,7 +363,9 @@ class format_flexsections_renderer extends plugin_renderer_base {
             $fullinfo = $ci->get_full_information();
             if ($fullinfo) {
                 $formattedinfo = \core_availability\info::format_info(
-                    $fullinfo, $section->course);
+                    $fullinfo,
+                    $section->course
+                );
                 $o .= $this->courserenderer->availability_info($formattedinfo, 'isrestricted isfullinfo');
             }
         }
@@ -323,7 +379,8 @@ class format_flexsections_renderer extends plugin_renderer_base {
      * @param int $sectionreturn
      * @param int $deletesection
      */
-    public function confirm_delete_section($course, $sectionreturn, $deletesection) {
+    public function confirm_delete_section($course, $sectionreturn, $deletesection)
+    {
         echo $this->box_start('noticebox');
         $courseurl = course_get_url($course, $sectionreturn);
         $optionsyes = array('confirm' => 1, 'deletesection' => $deletesection, 'sesskey' => sesskey());
@@ -331,5 +388,267 @@ class format_flexsections_renderer extends plugin_renderer_base {
         $formcancel = new single_button($courseurl, get_string('no'), 'get');
         echo $this->confirm(get_string('confirmdelete', 'format_flexsections'), $formcontinue, $formcancel);
         echo $this->box_end();
+    }
+
+    /**
+     * Display section and all its activities and subsections (called recursively)
+     *
+     * @param int|stdClass $course
+     * @param int|section_info $section
+     * @param int $sr section to return to (for building links)
+     * @param int $level nested level on the page (in case of 0 also displays additional start/end html code)
+     */
+    public function display_flexsection($course, $section, $sr, $level = 0)
+    {
+        $course = course_get_format($course)->get_course();
+        $section = course_get_format($course)->get_section($section);
+        $context = context_course::instance($course->id);
+        $contentvisible = true;
+        if (!$section->uservisible || !course_get_format($course)->is_section_real_available($section)) {
+            if ($section->visible && !$section->available && $section->availableinfo) {
+                // Still display section but without content.
+                $contentvisible = false;
+            } else {
+                return '';
+            }
+        }
+        $sectionnum = $section->section;
+        $movingsection = course_get_format($course)->is_moving_section();
+        if ($level === 0) {
+            $cancelmovingcontrols = course_get_format($course)->get_edit_controls_cancelmoving();
+            foreach ($cancelmovingcontrols as $control) {
+                echo $this->render($control);
+            }
+            echo html_writer::start_tag('ul', array('class' => 'flexsections flexsections-level-0'));
+            if ($section->section) {
+                $this->display_insert_section_here($course, $section->parent, $section->section, $sr);
+            }
+        }
+
+        // Display controls except for expanded/collapsed.
+        /** @var format_flexsections_edit_control[] $controls */
+        $controls = course_get_format($course)->get_section_edit_controls($section, $sr);
+        $collapsedcontrol = null;
+        $controlsstr = '';
+        foreach ($controls as $idxcontrol => $control) {
+            if ($control->actionname === 'expanded' || $control->actionname === 'collapsed') {
+                $collapsedcontrol = $control;
+            } else {
+                $controlsstr .= $this->render($control);
+            }
+        }
+        if (!empty($controlsstr)) {
+            $elocontrolsstr = html_writer::tag('div', $controlsstr, array('class' => 'controls'));
+        }
+
+        $elotitle = $this->section_title($sectionnum, $course, true);         
+
+         // Nhien Bo vao ben ngoai cho dep
+         $this->echo_start_section('section' . $sectionnum,$elotitle,$elosummary,$elocontrolsstr,$section->collapsed,$level);
+         echo html_writer::start_tag('li',
+                 array('class' => "section main".
+                     ($movingsection === $sectionnum ? ' ismoving' : '').
+                     (course_get_format($course)->is_section_current($section) ? ' current' : '').
+                     (($section->visible && $contentvisible) ? '' : ' hidden'),
+                     'id' => 'section-'.$sectionnum));//Nhien elo fix hien thi dung vi tri khi click
+ 
+
+        // Display section content.
+        echo html_writer::start_tag('div', array('class' => 'content'));
+        // Display section name and expanded/collapsed control.
+        if ($sectionnum && ($title = $this->section_title($sectionnum, $course, ($level == 0) || !$contentvisible))) {
+            if ($collapsedcontrol) {
+                $title = $this->render($collapsedcontrol) . $title;
+            }
+        }
+
+        echo $this->section_availability_message(
+            $section,
+            has_capability('moodle/course:viewhiddensections', $context)
+        );
+
+        // Display section description (if needed).
+        if ($contentvisible && ($summary = $this->format_summary_text($section))) {
+            echo html_writer::tag('div', $summary, array('class' => 'summary'));
+        } else {
+            echo html_writer::tag('div', '', array('class' => 'summary nosummary'));
+        }
+        // Display section contents (activities and subsections).
+        //Nhien 
+        if ($contentvisible || ($level == 0)) {
+        // if ($contentvisible && ($section->collapsed == FORMAT_FLEXSECTIONS_EXPANDED || !$level)) {
+            // Display resources and activities.
+            echo $this->course_section_cm_list($course, $section, $sr);
+            // echo $this->courserenderer->course_section_cm_list($course, $section, $sr);
+            if ($this->page->user_is_editing()) {
+                // A little hack to allow use drag&drop for moving activities if the section is empty.
+                if (empty(get_fast_modinfo($course)->sections[$sectionnum])) {
+                    echo "<ul class=\"section img-text\">\n</ul>\n";
+                }
+                echo $this->courserenderer->course_section_add_cm_control($course, $sectionnum, $sr);
+            }
+            // Display subsections.
+            $children = course_get_format($course)->get_subsections($sectionnum);
+            if (!empty($children) || $movingsection) {
+                echo html_writer::start_tag('ul', ['class' => 'flexsections flexsections-level-' . ($level + 1)]);
+                foreach ($children as $num) {
+                    $this->display_insert_section_here($course, $section, $num, $sr);
+                    $this->display_flexsection($course, $num, $sr, $level + 1);
+                }
+                $this->display_insert_section_here($course, $section, null, $sr);
+                echo html_writer::end_tag('ul'); // End of  .flexsections.
+            }
+            if ($addsectioncontrol = course_get_format($course)->get_add_section_control($sectionnum)) {
+                echo $this->render($addsectioncontrol);
+            }
+        }
+        echo html_writer::end_tag('div'); // End of .content .
+        echo html_writer::end_tag('li'); // End of .section .
+        $this->elo_echo_end_section();
+        if ($level === 0) {
+            if ($section->section) {
+                $this->display_insert_section_here($course, $section->parent, null, $sr);
+            }
+            echo html_writer::end_tag('ul'); // End of  .flexsections .
+        }
+    }
+
+    public function echo_start_section($eloclassnametail, $title, $elosummary, $elocontrolsstr, $sectioncollapsed, $level)
+    {
+        $level = MIN($level, 5);
+
+        $title = '<span id="' . $eloclassnametail . '" class = "sectiontitle-' . $level . '">' . $title . '</span>';
+        $elosummary = '<div class = "sectionsummary-' . $level . '">' . $elosummary . '</div>';
+
+        $checked = '';
+        $collapsed = 'collapsed';
+        if ($sectioncollapsed == FORMAT_FLEXSECTIONS_EXPANDED) {
+            $checked = 'show';
+            $collapsed = '';
+        }
+        global $elo_echo_start_section;
+        $eloclassnametail .= $elo_echo_start_section;
+        if ($elo_echo_start_section) {
+            echo '<div class="collapsetitle '.$collapsed.' sectiontoggle" data-toggle="collapse"  href="#collapse' . $eloclassnametail . '">
+            <label for="collapsible' . $eloclassnametail . '" class="lbl-toggle">' . $title . $elocontrolsstr . $elosummary . '</label></div>
+            <div id="collapse' . $eloclassnametail . '" class="panel-collapse collapse ' . $checked . '">
+            <div class="content-inner">';
+        } else {
+            echo '<div><div><div>';
+        }
+        $elo_echo_start_section++;
+    }
+
+    public function elo_echo_end_section()
+    {
+        echo '</div></div>';
+    }
+
+    public function course_section_cm_list($course, $section, $sectionreturn = null, $displayoptions = array()) {
+        global $USER;
+
+        $output = '';
+        $modinfo = get_fast_modinfo($course);
+        if (is_object($section)) {
+            $section = $modinfo->get_section_info($section->section);
+        } else {
+            $section = $modinfo->get_section_info($section);
+        }
+        $completioninfo = new completion_info($course);
+
+        // check if we are currently in the process of moving a module with JavaScript disabled
+        $ismoving = $this->courserenderer->page->user_is_editing() && ismoving($course->id);
+        if ($ismoving) {
+            $movingpix = new pix_icon('movehere', get_string('movehere'), 'moodle', array('class' => 'movetarget'));
+            $strmovefull = strip_tags(get_string("movefull", "", "'$USER->activitycopyname'"));
+        }
+
+        // Get the list of modules visible to user (excluding the module being moved if there is one)
+        $moduleshtml = array();
+        if (!empty($modinfo->sections[$section->section])) {
+            foreach ($modinfo->sections[$section->section] as $modnumber) {
+                $mod = $modinfo->cms[$modnumber];
+
+                if ($ismoving and $mod->id == $USER->activitycopy) {
+                    // do not display moving mod
+                    continue;
+                }
+
+                if ($modulehtml = $this->courserenderer->course_section_cm_list_item($course,
+                        $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+                    $moduleshtml[$modnumber] = $modulehtml;
+                }
+            }
+        }
+
+        $sectionoutput = '';
+        if (!empty($moduleshtml) || $ismoving) {
+            foreach ($moduleshtml as $modnumber => $modulehtml) {
+                if ($ismoving) {
+                    $movingurl = new moodle_url('/course/mod.php', array('moveto' => $modnumber, 'sesskey' => sesskey()));
+                    $sectionoutput .= html_writer::tag('li',
+                            html_writer::link($movingurl, $this->courserenderer->output->render($movingpix), array('title' => $strmovefull)),
+                            array('class' => 'movehere'));
+                }
+
+                $sectionoutput .= $modulehtml;
+            }
+
+            if ($ismoving) {
+                $movingurl = new moodle_url('/course/mod.php', array('movetosection' => $section->id, 'sesskey' => sesskey()));
+                $sectionoutput .= html_writer::tag('li',
+                        html_writer::link($movingurl, $this->courserenderer->output->render($movingpix), array('title' => $strmovefull)),
+                        array('class' => 'movehere'));
+            }
+        }
+
+        // Always output the section module list.
+        if($sectionoutput != ''){ // Nhien Only change here not display empty summary
+            $output .= html_writer::tag('ul', $sectionoutput, array('class' => 'section img-text'));
+        }
+
+        return $output;
+    }
+
+    public function display_flexsection_calendar($course, $PAGE)
+    {
+        global $CFG;
+        require_once($CFG->dirroot . '/course/lib.php');
+        require_once($CFG->dirroot . '/calendar/lib.php');
+    
+        $categoryid = optional_param('category', null, PARAM_INT);
+        $time = optional_param('time', 0, PARAM_INT);
+        $view = optional_param('view', 'month', PARAM_ALPHA);
+    
+        $url = new moodle_url('/calendar/view.php');
+    
+        if (empty($time)) {
+            $time = time();
+        }
+        $url->param('format_eloflexsections', $course->id);
+        if ($categoryid) {
+            $url->param('categoryid', $categoryid);
+        }
+        if ($view !== 'upcoming') {
+            $time = usergetmidnight($time);
+            $url->param('view', $view);
+        }
+    
+        $calendar = calendar_information::create($time, $course->id, $categoryid);
+    
+        $renderer = $PAGE->get_renderer('core_calendar');
+    
+        list($data, $template) = calendar_get_view($calendar, $view);
+        list($dataupcoming, $templateupcoming) = calendar_get_view($calendar, 'upcoming');
+    
+        $calendarhtml = $renderer->start_layout();
+        $calendarhtml .= $renderer->render_from_template($template, $data);
+        $calendarhtml .= $renderer->complete_layout();
+    
+        print $calendarhtml;
+    
+        $elocomplettionhtlm = export_course_completed_html($course);
+    
+        print $elocomplettionhtlm;
     }
 }

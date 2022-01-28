@@ -53,7 +53,7 @@ M.course.format.swap_sections = function(Y, node1, node2) {
  * @param {string} sectionto last affected section
  * @return void
  */
-M.course.format.process_sections = function(Y, sectionlist, response, sectionfrom, sectionto) {
+M.course.format.process_sections = function (Y, sectionlist, response, sectionfrom, sectionto) {
     var CSS = {
         SECTIONNAME: 'sectionname'
     };
@@ -65,3 +65,28 @@ M.course.format.process_sections = function(Y, sectionlist, response, sectionfro
         }
     }
 };
+
+M.course.format.handle_flexsections = function (e) {
+    // Prevent the default button action
+    e.preventDefault();
+
+    var confirmstring = M.util.get_string('confirmdelete', 'format_flexsections');
+
+    // Create the confirmation dialogue.
+    var confirm = new M.core.confirm({
+        question: confirmstring,
+        modal: true,
+        visible: false
+    });
+    confirm.show();
+
+    // If it is confirmed.
+    confirm.on('complete-yes', function () {
+        var href = e.currentTarget.getAttribute('href') + '&confirm=1';
+        window.location = href;
+    });
+}
+
+M.course.format.init_flexsections = function (Y) {
+    Y.delegate('click', M.course.format.handle_flexsections, 'body', 'li.section > .controls > a.delete');
+}

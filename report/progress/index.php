@@ -326,12 +326,13 @@ foreach($activities as $activity) {
 
     // Some names (labels) come URL-encoded and can be very long, so shorten them
     $displayname = format_string($activity->name, true, array('context' => $activity->context));
-
+    $nosortactivities =  boolval(get_config('report_progress', 'sortactivities'));
+    $nosort = $nosortactivities ? '' : 'no-sort';
     if ($csv) {
         print $sep.csv_quote($displayname).$sep.csv_quote($datetext);
     } else {
         $shortenedname = shorten_text($displayname);
-        print '<th scope="col" class="completion-header '.$datepassedclass.'">'.
+        print '<th scope="col" class="completion-header '.$nosort.' '.$datepassedclass.'">'.
             '<a href="'.$CFG->wwwroot.'/mod/'.$activity->modname.
             '/view.php?id='.$activity->id.'" title="' . s($displayname) . '">'.
             '<div class="rotated-text-container"><span class="rotated-text">'.$shortenedname.'</span></div>'.
@@ -339,9 +340,9 @@ foreach($activities as $activity) {
             $OUTPUT->image_icon('icon', get_string('modulename', $activity->modname), $activity->modname) .
             '</div>'.
             '</a>';
-        if ($activity->completionexpected) {
-            print '<div class="completion-expected"><span>'.$datetext.'</span></div>';
-        }
+        // if ($activity->completionexpected) {
+        //     print '<div class="completion-expected"><span>'.$datetext.'</span></div>';
+        // }
         print '</th>';
     }
     $formattedactivities[$activity->id] = (object)array(

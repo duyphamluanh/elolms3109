@@ -201,27 +201,15 @@ Example context (json):
 
 {{#hasdefaultlogin}}
     {{#alertbox}}
-        <div class="alertbox">
-            <div class="alertmessage">
-                {{{alertbox}}}
-        	</div>
+        <div class="row mt-3">
+            <div class="alert alert-primary w-100 text-center" role="alert">
+               {{{alertbox}}}
             </div>
         </div>
-        <div style="clear:both;"></div>
     {{/alertbox}}
-
-    {{! <div class="row my-md-3 my- py-lg-1 py-lg-3 "></div> }}
-    {{#error}}
-    <div class="row mt-5 py-xl-3">
-        <div class="col-12 loginerrors">
-            <a href="#" id="loginerrormessage" class="accesshide">{{error}}</a>
-            <div class="alert alert-danger" role="alert">{{error}}</div>
-        </div>
-    </div>
-    {{/error}}
-    {{^error}}
-        <div class="row mt-5 py-xl-5"></div>
-    {{/error}}
+    {{^alertbox}}
+         <div class="row mt-3">
+    {{/alertbox}}
 
     <div class="row">
         {{#displayguidelines}}       
@@ -242,7 +230,7 @@ Example context (json):
             <div class="card" id="{{elocarddefaultlogin}}-elo-card">
                 <div class="card-block">
                     {{#logourl}}
-                    <h2 class="text-center py-4"><a href="http://elo.edu.vn" title="{{sitename}}" alt="{{sitename}}"><img
+                    <h2 class="text-center py-3"><a href="http://elo.edu.vn" title="{{sitename}}" alt="{{sitename}}"><img
                                 style="width:70%;" src="{{logourl}}" title="{{sitename}}" alt="{{sitename}}" /></a></h2>
                     {{/logourl}}
                     {{^logourl}}
@@ -289,8 +277,14 @@ Example context (json):
                                             placeholder={{#quote}}{{#str}}password{{/str}}{{/quote}}
                                             onfocus="this.style.color='#8C8C8C';">
                                     </div>
+                                    {{#error}}
+                                        <div class="text-danger mt-1">{{error}}</div>
+                                    {{/error}}
+                                    {{^error}}
+                                        <div class="mt-4"></div>
+                                    {{/error}}
                                     {{#rememberusername}}
-                                    <div class="rememberpass mt-4 mb-3">
+                                    <div class="rememberpass">
                                         <input type="checkbox" name="rememberusername" id="rememberusername" value="1"
                                             style="vertical-align: middle;" {{#username}}checked="checked" {{/username}} />
                                         <label for="rememberusername">{{#str}} rememberusername, admin {{/str}}</label>

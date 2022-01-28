@@ -230,8 +230,9 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                             $rowcontent .= '
                     <div class="tilecontainer">
                             <figure class="coursestyle2">
-                                <div class="class-box-courseview" style="background-image: url(' . $imgurl . ');background-repeat: no-repeat;background-size:cover; background-position:center;">
-                                
+                                <div 
+                                    class="class-box-courseview" 
+                                    style="background-image: url(' . $imgurl . ');background-repeat: no-repeat;background-size:cover; background-position:center;">
                                 ';
                             if ($PAGE->theme->settings->titletooltip) {
                                 $tooltiptext = 'data-toggle="tooltip" data-placement= "top" title="' . format_string($course->fullname) . '"';
@@ -242,19 +243,18 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                             $rowcontent .= html_writer::start_tag('div', array(
                                 'class' => $course->visible ? 'coursevisible' : 'coursedimmed2'
                             ));
-                            // $rowcontent .= '
-                            //     <figcaption>
-                            //         <h3>' . $trimtitle . '</h3>
-                            //         <div class="course-card">
-                            //         ' . $catcontent . '
-                            //         ' . $customfieldcontent . '
-                            //         <button type="button" class="btn btn-primary btn-sm coursestyle2btn">' . $enrollbutton . '   <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
-                            //         ';
+                            // <a ' . $tooltiptext . ' href="' . $courseurl . '" class="coursestyle2url"></a>
                             $rowcontent .= '
                                 <figcaption>
+                                    <button type="button" class="btn btn-primary coursestyle2btn">' . $enrollbutton . '   <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
                                     <h3>' . $course->fullname . '</h3>
-                                    <button type="button" class="btn btn-primary btn-sm coursestyle2btn">' . $enrollbutton . '   <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
-                                    ';
+                                    <div>
+                                    ' . $catcontent . '
+                                    <div class="mt-3 flex">
+                                        <h4 class="mt-3">'.get_string('coursesummary').'</h4>
+                                        ' . $course->summary . '
+                                    </div>'
+                                    ;
                             if ($course->has_course_contacts()) {
                                 $rowcontent .= html_writer::start_tag('ul', array(
                                     'class' => 'teacherscourseview'
@@ -267,9 +267,7 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                             }
                             $rowcontent .= '
                                 </div>
-
                                 </figcaption>
-                                    <a ' . $tooltiptext . ' href="' . $courseurl . '" class="coursestyle2url"></a>
                                 </div>
                             </figure>
                     </div>

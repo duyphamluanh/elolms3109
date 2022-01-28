@@ -601,5 +601,5 @@ $string['connectwithus:footer'] = 'Conntect with us';
 $string['copyright:footer'] = '© 2022 Ho Chi Minh City Open University. All rights reserved.';
 
 $string['logoutguest'] = 'Log out guest user';
-
+$string['searchcourse'] = 'Search courses';
 

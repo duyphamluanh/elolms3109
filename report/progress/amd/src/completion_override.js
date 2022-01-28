@@ -21,9 +21,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @since      3.1
  */
-define(['jquery', 'core/ajax', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/notification',
+define(['jquery', 'core/ajax', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/notification', 'report_progress/jquery.dataTables',
+'report_progress/dataTables.buttons',
+'report_progress/dataTables.fixedHeader',
+'report_progress/dataTables.select',
         'core/custom_interaction_events', 'core/templates'],
-    function($, Ajax, Str, ModalFactory, ModalEvents, Notification, CustomEvents, Templates) {
+    function($, Ajax, Str, ModalFactory, ModalEvents, Notification, DataTables, Buttons, FixedHeader, Select, CustomEvents, Templates) {
 
         /**
          * @var {String} the full name of the current user.
@@ -170,6 +173,27 @@ define(['jquery', 'core/ajax', 'core/str', 'core/modal_factory', 'core/modal_eve
             $('#completion-progress').on(CustomEvents.events.activate, "a.changecompl", function(e, data) {
                 userConfirm(e, data);
             });
+
+            var table = $('#completion-progress').DataTable({
+                    "language": {
+                        "emptyTable": "No data available in table",
+                        "searchPanes": {
+                            "emptyPanes": 'There are no panes to display. :/'
+                        }
+                    },
+                    fixedHeader: {
+                        headerOffset: 25
+                    },
+                    columnDefs: [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
+                    "ordering": true,
+                    columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                    }],
+                });
         };
 
         return /** @alias module:report_progress/completion_override */ {

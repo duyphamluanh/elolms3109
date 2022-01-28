@@ -201,7 +201,7 @@ $string['textcontentinfo'] = 'Custom Content';
 $string['textcontentinfodesc'] = 'Use the textboxes below to add a customized information for users.';
 $string['generalcontentinfo'] = 'General Content Display Settings';
 $string['generalcontentinfodesc'] = 'The options below help you customize the way content is displayed and turn on additional features for Fordson.';
-$string['enrollcoursecard'] = 'Access';
+$string['enrollcoursecard'] = 'Truy cập';
 $string['layoutinfo'] = 'Layout Settings';
 $string['layoutinfodesc'] = 'Control page layout by chooseing a design.';
 

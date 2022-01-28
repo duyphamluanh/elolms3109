@@ -1334,3 +1334,290 @@ function format_flexsections_get_fontawesome_icon_map() {
         'format_flexsections:mergeup' => 'fa-level-up',
     ];
 }
+
+// Elo 2022
+function get_assign_dates_text($assignid){
+    global $DB;
+    $params = array('id' => $assignid);
+    $assigninstance = $DB->get_record('assign', $params, '*');
+    if(!$assigninstance) return;   
+    if (!isset($res)){
+        $result = new stdClass(); 
+    }      
+    $result->endtimetext = $assigninstance->duedate;
+    return $result;
+}
+
+function get_quiz_dates_text($quizid){
+    global $DB;
+    $params = array('id' => $quizid);
+    $quizinstance = $DB->get_record('quiz', $params, '*');
+    if(!$quizinstance) return;   
+    if (!isset($res)){
+        $result = new stdClass(); 
+    } 
+    $result->endtimetext = $quizinstance->timeclose;
+    return $result;
+}    
+
+function get_forum_dates_text($forumid){
+    global $DB;
+    $params = array('id' => $forumid);
+    $foruminstance = $DB->get_record('forum', $params, '*');
+    if(!$foruminstance) return;        
+    $result = new stdClass(); 
+    $result->endtimetext= $foruminstance->assesstimefinish;
+    return $result;
+}
+
+function render_flex_contents($course, $displaysection, $deletesection, $renderer, $PAGE){
+    $tabsummary_string = get_string('coursesummary', 'format_eloflexsections');
+    $tabcontent_string = get_string('content', 'format_eloflexsections');
+    $tablearningschedule_string = get_string('schedule', 'format_eloflexsections');
+    //----------------------------------------------start ul 
+    print html_writer::start_tag('div', array('class' => 'block-elo-content', 'data-region' => 'myoverview'));
+     print html_writer::start_tag('ul', array('id' => 'flexsectionsTab', 'class' => 'nav nav-tabs', 'role' => 'tablist'));
+      print html_writer::start_tag('li', array('class' => 'nav-item', 'role' => 'presentation'));
+       print html_writer::start_tag('a', array('href' => '#tabsummary','class' => 'nav-link','aria-controls' => 'tabsummary',
+                                        'title' => $tabsummary_string, 'data-toggle'=>'tab', 'role'=>'tab'));
+        print '<h4>' . $tabsummary_string . '</h4>';
+       print html_writer::end_tag('a');
+      print html_writer::end_tag('li');
+      print html_writer::start_tag('li', array('class' => 'nav-item', 'role' => 'presentation'));
+       print html_writer::start_tag('a', array('href' => '#tabcontent','class' => 'nav-link active','aria-controls' => 'tabcontent',
+                                        'title' => $tabcontent_string, 'data-toggle'=>'tab', 'role'=>'tab'));
+        print '<h4>' . $tabcontent_string . '</h4>';
+       print html_writer::end_tag('a');
+      print html_writer::end_tag('li'); 
+      print html_writer::start_tag('li', array('class' => 'nav-item', 'role' => 'presentation'));
+       print html_writer::start_tag('a', array('href' => '#tablearningschedule','class' => 'nav-link','aria-controls' => 'tablearningschedule',
+                                        'title' => $tablearningschedule_string, 'data-toggle'=>'tab', 'role'=>'tab'));
+        print '<h4>' . $tablearningschedule_string . '</h4>';
+       print html_writer::end_tag('a');
+      print html_writer::end_tag('li');
+     print html_writer::end_tag('ul');
+    //----------------------------------------------end ul 
+    //----------------------------------------------start content 
+     print '<div class="tab-content">';
+        render_flex_contents_tab_one($course);
+        render_flex_contents_tab_two($course, $displaysection, $deletesection, $renderer);
+        render_flex_contents_tab_three($course, $displaysection, $deletesection, $renderer, $PAGE);
+     print html_writer::end_tag('div');
+    //----------------------------------------------end content
+    print html_writer::end_tag('div');
+}
+//*******************************TAB ONE - Course Summary**********************
+function render_flex_contents_tab_one($course){
+    $nameobjectfor = get_string('coursename', 'format_flexsections');
+    $level = get_string('learninglevel', 'format_flexsections');
+    $duration = get_string('duration', 'format_flexsections');
+    $conditionfirst = get_string('prerequisitecourses', 'format_flexsections');
+    $descriptionobject = get_string('coursedescription', 'format_flexsections');
+    $downloadcontentobject = get_string('contentdownload', 'format_flexsections');
+
+    $coursesummaryhtml = 
+     html_writer::start_tag('div', array('id'=>'tabsummary','class' => 'tab-pane fade', 'role' => 'tabpanel'))
+    .html_writer::start_tag('div', array('id'=>'elosummary','class' => 'tab-pane p-1'))
+    . html_writer::start_tag('ul')
+    .  html_writer::start_tag('li')
+    .   html_writer::start_tag('span') . $nameobjectfor
+    .    html_writer::end_tag('span') . $course->fullname
+    .   html_writer::end_tag('li')
+    ;
+    if (isset($course->educationlevel)) {
+        $coursesummaryhtml .= html_writer::start_tag('li')
+                            .  html_writer::start_tag('span') . $level
+                            .  html_writer::end_tag('span') . $course->educationlevel
+                           .   html_writer::end_tag('li');
+    }
+    if (isset($course->time)) {
+        $coursesummaryhtml .= html_writer::start_tag('li')
+                            .  html_writer::start_tag('span') . $duration
+                            .  html_writer::end_tag('span') . $course->time
+                           .  html_writer::end_tag('li');
+    }
+    if (isset($course->firstrequired)) {
+        $coursesummaryhtml .= html_writer::start_tag('li')
+                            .  html_writer::start_tag('span') . $conditionfirst 
+                            .  html_writer::end_tag('span') . $course->firstrequired
+                           .  html_writer::end_tag('li');
+    }
+        $coursesummaryhtml .= html_writer::start_tag('li')
+                                .  html_writer::start_tag('span') . $descriptionobject 
+                                .  html_writer::end_tag('span') .'<br>'. $course->summary
+                            .  html_writer::end_tag('li');
+    if (isset($course->file)) {
+        $coursesummaryhtml .= html_writer::start_tag('li')
+                                .  html_writer::start_tag('span') . $downloadcontentobject 
+                                .  html_writer::end_tag('span') .'&nbsp;&nbsp;'
+                                .  html_writer::start_tag('a', array('download' => $course->file, 'href' => $course->file))
+                                .   html_writer::start_tag('i', array('style' => 'font-size:20px','class' => 'fa fa-cloud-download'))
+                                .   html_writer::end_tag('i')
+                                .  html_writer::end_tag('a')
+                            .  html_writer::end_tag('li');
+    }
+    $coursesummaryhtml .= html_writer::end_tag('ul')
+                    .   html_writer::end_tag('div')
+                .   html_writer::end_tag('div');
+    print $coursesummaryhtml;
+}
+//*******************************TAB TWO - Course Content**********************
+function render_flex_contents_tab_two($course, $displaysection, $deletesection, $renderer){
+
+    print html_writer::start_tag('div', array('id' => 'tabcontent', 'role' => 'tabpanel', 'class'=>'tab-pane fade in active'))
+        .  html_writer::start_tag('div', array('class' => 'course-content'));
+            // $renderer->display_section($course, $displaysection, $displaysection);
+            $renderer->display_flexsection($course, $displaysection, $displaysection);
+    print  html_writer::end_tag('div')
+        . html_writer::end_tag('div');
+}
+//*******************************TAB THREE - Course Content**********************
+function render_flex_contents_tab_three($course, $displaysection, $deletesection, $renderer, $PAGE){
+    print html_writer::start_tag('div', array('id' => 'tablearningschedule', 'role' => 'tabpanel', 'class'=>'tab-pane fade path-calendar p-3'));
+        $renderer->display_flexsection_calendar($course, $PAGE);
+    print  html_writer::end_tag('div');
+}
+
+function export_course_completed_html($course = null, $userid = null)
+{
+    //$completedhtml;
+    global $COURSE;
+    if ($course == null)
+        $elocompletornotactivitives = course_activitive_completion_statistic($COURSE, $userid);
+    else
+        $elocompletornotactivitives = course_activitive_completion_statistic($course, $userid);
+
+    return $elocompletornotactivitives;
+}
+
+function course_activitive_completion_statistic($course, $userid = null){
+    global $USER, $OUTPUT, $CFG, $DB;
+    // Make sure we continue with a valid userid.
+    $userid = empty($userid) ??  $USER->id;
+
+    $act_col = get_string('activitive_col', 'format_flexsections');
+    $end_col = get_string('activitive_enddate_col', 'format_flexsections');
+    $completion_col = get_string('activitive_completion_col', 'format_flexsections');
+
+    $context = context_course::instance($course->id);
+    $hasteacherdash = has_capability('moodle/course:viewhiddenactivities', $context);
+    $completion = new \completion_info($course);
+    $progresses = $completion->get_progress_all('(u.id = ' . $userid . ')');
+    
+    // First, let's make sure completion is enabled.
+    $activities = $completion->get_activities();
+    if ($activities) {
+        $course_activitive_cols = '';
+        foreach ($activities as $activity) {
+            if ($activity->modname == 'quiz' || $activity->modname == 'assign' || $activity->modname == 'forum') {
+                $datepassed = $activity->completionexpected && $activity->completionexpected <= time();
+                $datepassedclass = $datepassed ? 'completion-expired' : '';
+                // Fix forum khong cham diem nhung van hien thi thoi gian  completionexpected
+                if ($activity->modname == 'forum') { 
+                    if ($activity->completionexpected > 0) {
+                        $enddatetext = userdate($activity->completionexpected, get_string('strftimerecent'));
+                        $endYYMMDDHHIISS = date('Y-m-d H:i:s', $activity->completionexpected);
+                    } else {
+                        $forumtimetext = elo_get_forum_dates_text($activity->instance);
+                        $forumtimetext->endtimetext > 0 ? $enddatetext = userdate($forumtimetext->endtimetext, get_string('strftimerecent')) : $enddatetext = 'N/A';
+                        $forumtimetext->endtimetext > 0 ? $endYYMMDDHHIISS = date('Y-m-d H:i:s', $forumtimetext->endtimetext) :
+                            $endYYMMDDHHIISS = date('Y-m-d H:i:s', $course->enddate);
+                    }
+                }
+                // quiz
+                if ($activity->modname == 'quiz') {
+                    $quiztimetext = get_quiz_dates_text($activity->instance);
+                    $enddatetext =  $quiztimetext->endtimetext > 0 ? userdate($quiztimetext->endtimetext, get_string('strftimerecent')) : 'N/A';
+                    $endYYMMDDHHIISS = date('Y-m-d H:i:s', $quiztimetext->endtimetext);
+                }
+                 // assign
+                if ($activity->modname == 'assign') {
+                    $assigntimetext = elo_get_assign_dates_text($activity->instance);
+                    $enddatetext = $assigntimetext->endtimetext > 0 ? userdate($assigntimetext->endtimetext, get_string('strftimerecent')) : 'N/A';
+                    $endYYMMDDHHIISS = date('Y-m-d H:i:s', $assigntimetext->endtimetext);
+                }
+
+                $displayname = format_string($activity->name, true, array('context' => $activity->context));
+                $course_activitive_cols .= '<tr>';
+                $course_activitive_cols .= '<td>' .
+                    $OUTPUT->image_icon('icon', get_string('modulename', $activity->modname), $activity->modname) .
+                    '<a target="_blank" href="' . $CFG->wwwroot . '/mod/' . $activity->modname .
+                    '/view.php?id=' . $activity->id . '" title="' . s($displayname) . '">' .
+                    '<span class="rotated-text">' . $displayname . '</span>' .
+                    '</a></td>';
+                $course_activitive_cols .= '<td data-order='.$endYYMMDDHHIISS.'><span class="elo-enddate">' . $enddatetext . '</span></td>';
+                $formattedactivities[$activity->id] = (object)array(
+                    'datepassedclass' => $datepassedclass,
+                    'displayname' => $displayname,
+                );
+
+                // Duy Edit
+                $progress = $progresses ? $progresses[$USER->id]->progress : [];
+                // Get progress information and state
+                if (array_key_exists($activity->id, $progress)) { // Duy
+                    $thisprogress = $progress[$activity->id]; // Duy
+                    $state = $thisprogress->completionstate;
+                    $overrideby = $thisprogress->overrideby;
+                    $date = userdate($thisprogress->timemodified);
+                } else {
+                    $state = COMPLETION_INCOMPLETE;
+                    $overrideby = 0;
+                    $date = '';
+                }
+
+                // Work out how it corresponds to an icon
+                switch ($state) {
+                    case COMPLETION_INCOMPLETE:
+                        $completiontype = 'n' . ($overrideby ? '-override' : '');
+                        break;
+                    case COMPLETION_COMPLETE:
+                        $completiontype = 'y' . ($overrideby ? '-override' : '');
+                        break;
+                    case COMPLETION_COMPLETE_PASS:
+                        $completiontype = 'pass';
+                        break;
+                    case COMPLETION_COMPLETE_FAIL:
+                        $completiontype = 'fail';
+                        break;
+                }
+
+                $completiontrackingstring = $activity->completion == COMPLETION_TRACKING_AUTOMATIC ? 'auto' : 'manual';
+                $completionicon = 'completion-' . $completiontrackingstring . '-' . $completiontype;
+
+                if ($overrideby) {
+                    $overridebyuser = \core_user::get_user($overrideby, '*', MUST_EXIST);
+                    $describe = get_string('completion-' . $completiontype, 'completion', fullname($overridebyuser));
+                } else {
+                    $describe = get_string('completion-' . $completiontype, 'completion');
+                }
+                $a = new StdClass;
+                $a->state = $describe;
+                $a->date = $date;
+                $a->user = fullname($USER);
+                $a->activity = $formattedactivities[$activity->id]->displayname;
+                $fulldescribe = get_string('progress-title', 'completion', $a);
+                $celltext = $OUTPUT->pix_icon('i/' . $completionicon, s($fulldescribe));
+                $course_activitive_cols .= '<td><span style = "display:none">' . $completiontype . '</span><div>' .
+                    $celltext . '</div></td>';
+
+                $course_activitive_cols .= '</tr>';
+            }
+        } 
+        $course_activitive_html =
+        '<div class="table-responsive mt-3">
+            <table id = "course_activitive_table_id" class="table cell-border hover course_activitive_table" style="overflow-y:scroll">
+                <thead>
+                    <tr>
+                        <th>' . $act_col . '</th>
+                        <th>' . $end_col . '</th>
+                        <th>' . $completion_col . '</th>
+                    </tr>
+                </thead>
+                <tbody>'
+                    . $course_activitive_cols .
+                '</tbody>
+            </table>
+        </div>';
+    }
+    return $course_activitive_html;
+}

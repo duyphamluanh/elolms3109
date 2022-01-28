@@ -423,4 +423,5 @@ public function elo_course_section_cm_list($course, $section, $sectionreturn = n
         echo $this->confirm(get_string('confirmdelete', 'format_eloflexsections'), $formcontinue, $formcancel);
         echo $this->box_end();
     }
+
 }

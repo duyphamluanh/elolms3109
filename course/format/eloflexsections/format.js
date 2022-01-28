@@ -16,12 +16,12 @@ M.course.format = M.course.format || {};
  *
  * @return {object} section list configuration
  */
-M.course.format.get_config = function() {
+M.course.format.get_config = function () {
     return {
-        container_node : 'ul',
-        container_class : 'eloflexsections',
-        section_node : 'li',
-        section_class : 'section'
+        container_node: 'ul',
+        container_class: 'eloflexsections',
+        section_node: 'li',
+        section_class: 'section'
     };
 }
 
@@ -33,7 +33,7 @@ M.course.format.get_config = function() {
  * @param {string} node2 node to swap with
  * @return {NodeList} section list
  */
-M.course.format.swap_sections = function(Y, node1, node2) {
+M.course.format.swap_sections = function (Y, node1, node2) {
     var CSS = {
         COURSECONTENT: 'course-content',
         SECTIONADDMENUS: 'section_add_menus'
@@ -53,20 +53,20 @@ M.course.format.swap_sections = function(Y, node1, node2) {
  * @param {string} sectionto last affected section
  * @return void
  */
-M.course.format.process_sections = function(Y, sectionlist, response, sectionfrom, sectionto) {
+M.course.format.process_sections = function (Y, sectionlist, response, sectionfrom, sectionto) {
     var CSS = {
-        SECTIONNAME : 'sectionname'
+        SECTIONNAME: 'sectionname'
     };
 
     if (response.action == 'move') {
-        // update sections titles
+        // Update sections titles.
         for (var i in response.sectiontitles) {
-            sectionlist.item(i).one('.'+CSS.SECTIONNAME).setContent(response.sectiontitles[i]);
+            sectionlist.item(i).one('.' + CSS.SECTIONNAME).setContent(response.sectiontitles[i]);
         }
     }
 }
 
-M.course.format.handle_eloflexsections = function(e) {
+M.course.format.handle_eloflexsections = function (e) {
     // Prevent the default button action
     e.preventDefault();
 
@@ -81,12 +81,12 @@ M.course.format.handle_eloflexsections = function(e) {
     confirm.show();
 
     // If it is confirmed.
-    confirm.on('complete-yes', function() {
+    confirm.on('complete-yes', function () {
         var href = e.currentTarget.getAttribute('href') + '&confirm=1';
         window.location = href;
     });
 }
 
-M.course.format.init_eloflexsections = function(Y) {
+M.course.format.init_eloflexsections = function (Y) {
     Y.delegate('click', M.course.format.handle_eloflexsections, 'body', 'li.section > .controls > a.delete');
 }

@@ -3204,51 +3204,6 @@ EOD;
         return html_writer::tag('ul', implode("\n", $lis), $attrs);
     }
 
-    // Elo search
-    public function search_box_custom($id = false)
-    {
-        global $CFG; // $USER
-        // Accessing $CFG directly as using \core_search::is_global_search_enabled would
-        // result in an extra included file for each site, even the ones where global search
-        // is disabled.
-        // empty($USER->id) hide search box in log in form
-        if (!empty($CFG->enableglobalsearch) || !has_capability('moodle/search:query', context_system::instance())) {
-            return '';
-        }
-        if ($id == false) {
-            $id = uniqid();
-        } else {
-            // Needs to be cleaned, we use it for the input id.
-            $id = clean_param($id, PARAM_ALPHANUMEXT);
-        }
-        // button > icon
-        $buttonattrs = html_writer::tag(
-            'button',
-            $this->pix_icon(
-                'a/search',
-                get_string('search', 'search'),
-                'moodle'
-            ),
-            array('type' => 'submit', 'class' => 'searchButton')
-        );
-        //input
-        $inputattrs = array(
-            'class' => 'searchTerm', 'type' => 'text', 'name' => 'search',
-            'placeholder' => get_string('searchcourse', 'search'),
-            'id' => 'id_q_' . $id
-        );
-        //form
-        $formattrs = array(
-            'class' => 'searchnav',
-            'action' => $CFG->wwwroot . '/course/search.php', 'method' => 'get'
-        );
-        $input_button_icon = html_writer::tag('input', '', $inputattrs) . $buttonattrs;
-        //$fieldsetoutput= html_writer::tag('fieldset', $input_button_icon,
-        // array('class' => 'coursesearchbox invisiblefieldset'));
-
-        return html_writer::tag('form', $input_button_icon, $formattrs);
-    }
-
     /**
      * Returns a search box.
      *

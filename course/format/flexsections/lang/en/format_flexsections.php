@@ -50,3 +50,23 @@ $string['showfromothers'] = 'Show topic';
 
 $string['keepstateoversession'] = 'Keep collapse state over session';
 $string['keepstateoversession_desc'] = 'If checked collapse state will be kept when the user logs out.';
+
+// Elo
+$string['coursesummary'] = 'Course summary';
+$string['schedule'] = 'Schedule';
+$string['content'] = 'Content';
+$string['weeklystudyplan'] = 'Forum';
+$string['coursename'] = 'Course name:';
+$string['learninglevel'] = 'Learning level:';
+$string['duration'] = 'Duration:';
+$string['prerequisitecourses'] = 'Prerequisite courses:';
+$string['coursedescription'] = 'Course description:';
+$string['contentdownload'] = 'Download course content';
+$string['gotoforum'] = 'Go to forum';
+
+$string['activitive_col'] = 'Activities';
+$string['activitive_startdate_col'] = 'Start date';
+$string['activitive_enddate_col'] = 'End date';
+$string['activitive_completion_col'] = 'Completion';
+$string['keepstateoversession'] = 'Keep collapse state over session';
+$string['keepstateoversession_desc'] = 'If checked collapse state will be kept when the user logs out.';

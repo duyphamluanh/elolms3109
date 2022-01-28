@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->libdir.'/filelib.php');
 require_once($CFG->libdir.'/completionlib.php');
+require_once($CFG->dirroot. '/course/format/flexsections/lib.php');
 
 $context = context_course::instance($course->id);
 
@@ -41,9 +42,22 @@ $renderer = $PAGE->get_renderer('format_flexsections');
 if (($deletesection = optional_param('deletesection', 0, PARAM_INT)) && confirm_sesskey()) {
     $renderer->confirm_delete_section($course, $displaysection, $deletesection);
 } else {
-    $renderer->display_section($course, $displaysection, $displaysection);
+    // $renderer->display_section($course, $displaysection, $displaysection);
+    render_flex_contents($course, $displaysection, $deletesection ,$renderer, $PAGE);
 }
 
-// Include course format js module.
+// Include course format js module
 $PAGE->requires->js('/course/format/flexsections/format.js');
-$PAGE->requires->js_call_amd('format_flexsections/format', 'init');
+$PAGE->requires->string_for_js('confirmdelete', 'format_flexsections');
+$PAGE->requires->js_init_call('M.course.format.init_flexsections');
+
+
+// Keep state for each sections
+$params = [
+    'course' => $course->id,
+    'keepstateoversession' => get_config('format_flexsections', 'keepstateoversession')
+];
+
+// Include course format js module.
+// $PAGE->requires->js_call_amd('format_flexsections/format', 'init');
+$PAGE->requires->js_call_amd('format_flexsections/flexsections', 'init', array($params));
