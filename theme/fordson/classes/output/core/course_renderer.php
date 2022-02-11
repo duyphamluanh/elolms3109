@@ -246,7 +246,9 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
                             // <a ' . $tooltiptext . ' href="' . $courseurl . '" class="coursestyle2url"></a>
                             $rowcontent .= '
                                 <figcaption>
+                                    <a ' . $tooltiptext . ' href="' . $courseurl . '">
                                     <button type="button" class="btn btn-primary coursestyle2btn">' . $enrollbutton . '   <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                    </a>
                                     <h3>' . $course->fullname . '</h3>
                                     <div>
                                     ' . $catcontent . '
@@ -690,7 +692,7 @@ if ($PAGE->theme->settings->coursetilestyle < 10) {
             }
             $totalcount = $coursecat->get_children_count();
             if (!$totalcount) {
-                // Note that we call coursecat::get_children_count() AFTER coursecat::get_children() to avoid extra DB requests.
+                // Note that we call core_course_category::get_children_count() AFTER core_course_category::get_children() to avoid extra DB requests.
                 // Categories count is cached during children categories retrieval.
                 return '';
             }

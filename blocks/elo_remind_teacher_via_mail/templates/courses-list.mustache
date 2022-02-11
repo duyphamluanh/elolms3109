@@ -1,0 +1,42 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block_elo_remind_teacher_via_mail/main
+
+    This template renders the main content area for the elo_reminder_users block.
+
+    Example context (json):
+    {}
+}}
+<div id="accordion_{{teacherid}}">
+    <div class="card bg-light">
+        <div class="" id="heading_{{teacherid}}_{{id}}">
+            <h5 class="mb-0">
+                <button class="btn collapsed text-dark w-100 textselectbutton" data-toggle="collapse" data-target="#collapse_{{teacherid}}_{{id}}" aria-expanded="false" aria-controls="collapse_{{teacherid}}_{{id}}">
+                    <strong>{{fullname}}</strong>
+                </button>
+            </h5>
+        </div>
+        <div id="collapse_{{teacherid}}_{{id}}" class="collapse" aria-labelledby="heading_{{teacherid}}_{{id}}" data-parent="#accordion_{{teacherid}}">
+            <div class="px-2 py-3">
+               {{#notgradedActivities}}
+                    <p>{{ name }} : {{ notgradedActivities }}</p>
+               {{/notgradedActivities}}
+            </div>
+        </div>
+    </div>
+</div>

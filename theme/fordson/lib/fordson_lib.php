@@ -140,10 +140,11 @@ function page_location_incourse_themeconfig() {
 
 }
 // Elo
-function theme_eloteam_custom_flat_navigation(\flat_navigation $flatnav) {
-    theme_eloteam_delete_menuitems($flatnav);
+function theme_custom_flat_navigation(\flat_navigation $flatnav) {
+    theme_delete_menuitems($flatnav);
 }
-function theme_eloteam_delete_menuitems(\flat_navigation $flatnav) {
+
+function theme_delete_menuitems(\flat_navigation $flatnav) {
     $itemstodelete = [
         'privatefiles','home','contentbank'
     ];
@@ -152,6 +153,5 @@ function theme_eloteam_delete_menuitems(\flat_navigation $flatnav) {
             $flatnav->remove($item->key);
             continue;
         }
-
     }
 }

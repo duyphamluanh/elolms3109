@@ -65,12 +65,12 @@ $THEME->layouts = [
     // Main course page.
     'course' => [
         'file' => 'course.php',
-        'regions' => ['side-pre', 'fp-a', 'fp-b', 'fp-c'],
+        'regions' => ['side-pre', 'fp-a', 'fp-b', 'fp-c', 'fp-full'],
         'defaultregion' => 'fp-c',
     ],
     'incourse' => [
         'file' => 'course.php',
-        'regions' => ['side-pre', 'fp-a', 'fp-b', 'fp-c'],
+        'regions' => ['side-pre', 'fp-a', 'fp-b', 'fp-c', 'fp-full'],
         'defaultregion' => 'side-pre',
     ],
     'coursecategory' => [
@@ -158,6 +158,12 @@ if ($THEME->settings->enhancedmydashboard == 1 && $THEME->settings->blockdisplay
         'defaultregion' => 'side-pre',
         'options' => ['nonavbar' => true, 'langmenu' => true],
     ];
+    // $THEME->layouts['course'] = [
+    //     'file' => 'course.php',
+    //     'regions' => ['fp-a', 'fp-b', 'fp-c', 'side-pre'],
+    //     'defaultregion' => 'fp-full',
+    //     'options' => ['nonavbar' => true, 'langmenu' => true],
+    // ];
 }
 if ($THEME->settings->blockdisplay == 2) {
     $THEME->layouts['course'] = [

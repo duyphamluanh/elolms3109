@@ -49,6 +49,7 @@ $headerlogo = $PAGE->theme->setting_file_url('headerlogo', 'headerlogo');
 $blockshtml = $OUTPUT->blocks('side-pre');
 $hasblocks = strpos($blockshtml, 'data-block=') !== false;
 
+
 $blockshtmla = $OUTPUT->blocks('fp-a');
 $blockshtmlb = $OUTPUT->blocks('fp-b');
 $blockshtmlc = $OUTPUT->blocks('fp-c');
@@ -96,6 +97,6 @@ $templatecontext['flatnavigation'] = $nav;
 $templatecontext['firstcollectionlabel'] = $nav->get_collectionlabel();
 
 // Elo: Remove flat navigation items
-theme_eloteam_custom_flat_navigation($PAGE->flatnav);
+theme_custom_flat_navigation($PAGE->flatnav);
 echo $OUTPUT->render_from_template('theme_fordson/mydashboard', $templatecontext);
 

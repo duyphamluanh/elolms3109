@@ -1,0 +1,13 @@
+{{#courses}}
+        <div style='overflow-x: auto;'>
+            <h6><strong>{{coursename}}</strong></h6>
+            {{#assign}}
+                <p class='my-0'>
+                    <a class='ml-3 font-weight-bold' style='white-space: nowrap; white-space: initial;' target='_blank' href='{{url}}' id='notification-id-4-link'>
+                        {{name}}{{#str}} _draft , block_elo_unsubmit_assignment_reminder{{/str}}
+                    </a>  
+                </p>
+            {{/assign}}
+            <hr>
+        </div>
+{{/courses}}

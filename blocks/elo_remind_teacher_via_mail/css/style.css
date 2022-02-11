@@ -11,3 +11,14 @@
 .w40 {
     width: 40% !important;
 }
+
+#emailhistorytable.dataTable thead th,
+#emailhistorytable.dataTable thead td,
+#emailhistorytable.dataTable.no-footer,
+#remindteachertable.dataTable thead th,
+#remindteachertable.dataTable thead td,
+#remindteachertable.dataTable.no-footer,
+#page-blocks-elo_remind_teacher_via_mail-index table.fixedHeader-floating thead th
+{
+    border-bottom: 1px solid #dee2e6;
+}

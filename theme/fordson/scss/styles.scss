@@ -96,6 +96,11 @@ a:not([class]):focus,
     box-shadow: none;
 }
 
+b,
+strong {
+  font-weight: bold; 
+}
+
 
 /**
 * login on frontpage 
@@ -215,6 +220,10 @@ div#fordsonlogin {
 }
 
 /* Editing Block Columns */
+.editing aside#block-region-fp-full {
+    border: 2px dashed $gray-200;
+    min-height: 10rem;
+}
 
 .editing aside#block-region-fp-a {
     border: 2px dashed $gray-200;
@@ -2142,7 +2151,7 @@ div#learningcontent {
 
 #accordionmycourses [data-key="mycourses"] a {
     display: block;
-    color: #000;
+    color: #495057;
     outline: none;
     text-decoration: none;
 }

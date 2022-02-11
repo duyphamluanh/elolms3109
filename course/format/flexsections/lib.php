@@ -1478,8 +1478,7 @@ function render_flex_contents_tab_three($course, $displaysection, $deletesection
     print  html_writer::end_tag('div');
 }
 
-function export_course_completed_html($course = null, $userid = null)
-{
+function export_course_completed_html($course = null, $userid = null) {
     //$completedhtml;
     global $COURSE;
     if ($course == null)
@@ -1518,7 +1517,7 @@ function course_activitive_completion_statistic($course, $userid = null){
                         $enddatetext = userdate($activity->completionexpected, get_string('strftimerecent'));
                         $endYYMMDDHHIISS = date('Y-m-d H:i:s', $activity->completionexpected);
                     } else {
-                        $forumtimetext = elo_get_forum_dates_text($activity->instance);
+                        $forumtimetext = get_forum_dates_text($activity->instance);
                         $forumtimetext->endtimetext > 0 ? $enddatetext = userdate($forumtimetext->endtimetext, get_string('strftimerecent')) : $enddatetext = 'N/A';
                         $forumtimetext->endtimetext > 0 ? $endYYMMDDHHIISS = date('Y-m-d H:i:s', $forumtimetext->endtimetext) :
                             $endYYMMDDHHIISS = date('Y-m-d H:i:s', $course->enddate);
@@ -1532,7 +1531,7 @@ function course_activitive_completion_statistic($course, $userid = null){
                 }
                  // assign
                 if ($activity->modname == 'assign') {
-                    $assigntimetext = elo_get_assign_dates_text($activity->instance);
+                    $assigntimetext = get_assign_dates_text($activity->instance);
                     $enddatetext = $assigntimetext->endtimetext > 0 ? userdate($assigntimetext->endtimetext, get_string('strftimerecent')) : 'N/A';
                     $endYYMMDDHHIISS = date('Y-m-d H:i:s', $assigntimetext->endtimetext);
                 }

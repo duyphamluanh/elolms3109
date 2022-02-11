@@ -37,7 +37,7 @@ $string['descsendmaildelay'] = 'Time between sending emails';
 
 
 $string['reminder:subject'] = 'Thư nhắc nhở chấm điểm các hoạt động của sinh viên';
-$string['reminder:message'] = 'Vui lòng đăng nhập để chấm điểm các hoạt động của sinh viên';
+$string['reminder:message'] = 'Hiện tại, một số sinh viên đã đăng/ nộp bài trên các hoạt động. Thầy/cô vui lòng đăng nhập để chấm điểm các hoạt động của sinh viên';
 $string['reminder:sign'] = 'TT.ĐTTT';
 $string['latest_send_mail'] = 'Lần gởi gần nhất';
 $string['stt'] = 'STT';
@@ -52,5 +52,7 @@ $string['userfrom'] = 'Người gởi';
 $string['userto'] = 'Người nhận';
 $string['content'] = 'Nội dung';
 $string['time'] = 'Thời gian';
+
 $string['teacherlist'] = 'Danh sách giáo viên';
 $string['history'] = 'Lịch sử';
+$string['topage'] = 'Chuyển sang trang nhăc nhở chấm điểm sinh viên';

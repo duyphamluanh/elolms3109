@@ -436,8 +436,8 @@ is disabled).
   - events_cleanup()
   - events_dequeue()
   - events_get_handlers()
-* coursecat::get() now has optional $user parameter.
-* coursecat::is_uservisible() now has optional $user parameter.
+* core_course_category::get() now has optional $user parameter.
+* core_course_category::is_uservisible() now has optional $user parameter.
 * Removed the lib/form/submitlink.php element which was deprecated in 3.2.
 * The user_selector classes do not support custom list of extra identity fields any more. They obey the configured user
   policy and respect the privacy setting made by site administrators. The list of user identifiers should never be

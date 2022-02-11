@@ -3,193 +3,11 @@ require_once($CFG->dirroot .'/course/lib.php');
 require_once($CFG->dirroot .'/mod/forum/lib.php');
 // 2 weeks
 const GRADING_DEADLINE = 1209600;
-const SENDMAIL_DELAY = 1800;
-
-// Functions render
-// Render table
-function renderTable($teachers){
-    // Get table rows render
-    $row = renderTableRows($teachers);
-    $historyrow = renderTeachMailHistory();
-    $table = '
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">'.get_string('teacherlist', 'block_elo_remind_teacher_via_mail').'</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">'.get_string('history', 'block_elo_remind_teacher_via_mail').'</a>
-        </li>
-    </ul>
-
-    <!-- Tab panes -->
-    <div class="tab-content">
-    <div class="tab-pane active mt-4" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <table class="table table-bordered table-hover mt-4" id="remindteachertable">
-        <thead>
-            <tr>
-            <th scope="col" class="text-center">'.get_string('stt', 'block_elo_remind_teacher_via_mail').'</th>
-            <th scope="col" class="text-center">'.get_string('teacher', 'block_elo_remind_teacher_via_mail').'</th>
-            <th scope="col" class="text-center" width=40% >'.get_string('notgradedyetactivities', 'block_elo_remind_teacher_via_mail').'</th>
-            <th scope="col" class="text-center" >'.get_string('total', 'block_elo_remind_teacher_via_mail').'</th>
-            <th scope="col" class="text-center">'.get_string('mail', 'block_elo_remind_teacher_via_mail').'</th>
-            </tr>
-        </thead>
-        <tbody>
-            '.$row.'
-        </tbody>
-        </table>
-    </div>
-    <div class="tab-pane mt-4" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <table class="table table-bordered table-hover mt-4" id="emailhistorytable">
-            <thead>
-                <tr>
-                <th scope="col" class="text-center">'.get_string('stt', 'block_elo_remind_teacher_via_mail').'</th>
-                 <th scope="col" class="text-center">'.get_string('userfrom', 'block_elo_remind_teacher_via_mail').'</th>
-                <th scope="col" class="text-center">'.get_string('userto', 'block_elo_remind_teacher_via_mail').'</th>
-                <th scope="col" class="text-center w40">'.get_string('content', 'block_elo_remind_teacher_via_mail').'</th>
-                <th scope="col" class="text-center">'.get_string('time', 'block_elo_remind_teacher_via_mail').'</th>
-                </tr>
-            </thead>
-            <tbody>
-                '.$historyrow.'
-            </tbody>
-        </table>
-    </div>
-    </div>
-    ';  
-    return $table;
-}
-
-// Render table rows
-function renderTableRows($teachers){
-    global $CFG;
-    $row = '';
-    $STT = 0;
-    foreach($teachers as $teacher){
-        // Get teachers courses - courses which have not expired.
-        $teacher_courses = getEnrolledCourseByUserID($teacher->id);
-        // Get render Not graded yet activities cells and total number of not graded yet activities
-        [$courseListHTML,$notgradedActivitiesCoursesTotal] = renderGradedItemsCourseList($teacher_courses,$teacher->id);
-        if($notgradedActivitiesCoursesTotal != 0){
-            $row .= '
-            <tr>
-                <th scope="row" class="text-center">'.$STT++.'</th>
-                <td>
-                    <p>'.get_string('fullname', 'block_elo_remind_teacher_via_mail').': '.$teacher->lastname.' '.$teacher->firstname.'</p>
-                    <p>'.get_string('email', 'block_elo_remind_teacher_via_mail').': '.$teacher->email.'</p>
-                </td>
-                <td>
-                    <strong>'.get_string('courses', 'block_elo_remind_teacher_via_mail').': </strong>
-                    '.$courseListHTML.'
-                </td>
-                <td class="text-center"><strong>'.$notgradedActivitiesCoursesTotal.'</strong></td>
-                <td class="text-center">';
-            // Render send mail cell
-            // Get the latest sent mail  to the teacher
-            $mailsend = getLastSendMailTime($teacher->id);
-            // Show if the latest sent mail is exists
-            $maxtimecreated = $mailsend->maxtimecreated ? date('d/m/Y H:i:s', $mailsend->maxtimecreated) : '';
-            // Show send mail button if not graded yet activities is bigger than zero.
-            if($notgradedActivitiesCoursesTotal > 0){
-                $row .= '<button type="button" class="btn btn-primary"';
-                // Disable button if the latest mail sent time is smaller than the present time
-                // 30 minutes
-                $sendmaildelay = SENDMAIL_DELAY;
-                if (isset(get_config("block_elo_remind_teacher_via_mail")->sendmaildelay)) {
-                    $sendmaildelay = get_config("block_elo_remind_teacher_via_mail")->sendmaildelay * 60;
-                }
-                $row .= (time() - $mailsend->maxtimecreated) > $sendmaildelay ? "" : " disabled ";
-                $row .= ' tid='.$teacher->id.' id="sendmail_'.$teacher->id.'">
-                            <i class="fa fa-spinner fa-spin hide"></i>'.get_string('mail', 'block_elo_remind_teacher_via_mail').'</button>';
-            }
-                $row .= '<p id="latestSent_'.$teacher->id.'">'.get_string('latest_send_mail', 'block_elo_remind_teacher_via_mail').': '.$maxtimecreated.'</p>
-                    </td>
-                </tr>';
-            }
-        
-            
-    }
-    return $row;
-}
-
-// Render table mails history
-function renderTeachMailHistory(){
-    $row = '';
-    $STT = 0;
-    $teacherMailsHistory = getMaiLHistory();
-    foreach($teacherMailsHistory as $teacherMailHistory){
-        $userFrom = getUserById($teacherMailHistory->userfromid);
-        $userTo = getUserById($teacherMailHistory->usertoid);
-        $row .= '
-            <tr>
-                <th scope="row" class="text-center">'.$STT++.'</th>
-                <td>
-                    <p>'.get_string('fullname', 'block_elo_remind_teacher_via_mail').': '.$userFrom->lastname.' '.$userFrom->firstname.'</p>
-                    <p>'.get_string('email', 'block_elo_remind_teacher_via_mail').': '.$userFrom->email.'</p>
-                </td>
-                <td>
-                    <p>'.get_string('fullname', 'block_elo_remind_teacher_via_mail').': '.$userTo->lastname.' '.$userTo->firstname.'</p>
-                    <p>'.get_string('email', 'block_elo_remind_teacher_via_mail').': '.$userTo->email.'</p>
-                </td>
-                <td> '.$teacherMailHistory->content.'</td>
-                <td class="text-center">'.date('d/m/Y H:i:s', $teacherMailHistory->timecreated).'</td>
-                ';
-    }
-    return $row;
-}
-
-// Render Course list and not graded yet activities 
-function renderGradedItemsCourseList($teacher_courses,$teacherid){
-    $courseListHTML = '';
-    $courseListHTML .= '<div id="accordion_'.$teacherid.'">';
-    // Count not graded yet activities
-    $notgradedActivitiesCoursesTotal = 0;
-    foreach($teacher_courses as $teacher_course){
-        [$gradedActivitiesHTML,$notgradedActivitiesTotal] = renderGradedItemsList($teacher_course->id,$teacherid);
-        if($notgradedActivitiesTotal == 0){continue;}
-        // Count not graded yet activities
-        $notgradedActivitiesCoursesTotal += $notgradedActivitiesTotal;
-        $courseListHTML .='<div class="card bg-light">
-            <div class="" id="heading_'.$teacherid.'_'.$teacher_course->id.'">
-                <h5 class="mb-0">
-                    <button class="btn collapsed text-dark w-100 textselectbutton" data-toggle="collapse" data-target="#collapse_'.$teacherid.'_'.$teacher_course->id.'" aria-expanded="false" aria-controls="collapse_'.$teacherid.'_'.$teacher_course->id.'">
-                    '.$teacher_course->fullname.'
-                    </button>
-                </h5>
-            </div>
-            <div id="collapse_'.$teacherid.'_'.$teacher_course->id.'" class="collapse" aria-labelledby="heading_'.$teacherid.'_'.$teacher_course->id.'" data-parent="#accordion_'.$teacherid.'">
-                <div class="px-2 py-3">
-                    '.$gradedActivitiesHTML.'
-                </div>
-            </div>
-        </div>';
-    }
-    $courseListHTML .= '</div>';
-    return [$courseListHTML,$notgradedActivitiesCoursesTotal];
-}
-
-// Render not graded yet activities list
-function renderGradedItemsList($courseid,$teacherid){
-    $gradedActivities = getGradedActivitiesByCourseID($courseid,$teacherid);
-    $gradedActivitiesHTML = '';
-    $notgradedActivitiesTotal = 0;
-    foreach($gradedActivities as $gradedActivitie){
-        $gradedActivitiesHTML.= '<p>'.$gradedActivitie->name.' : '.$gradedActivitie->notgradedActivities.'</p>';
-        $notgradedActivitiesTotal += $gradedActivitie->notgradedActivities;
-    }
-    
-    return [$gradedActivitiesHTML,$notgradedActivitiesTotal];
-}
-// Functions render - end
-
 
 // Functions get data with sql
 function getUserById($id){
     global $DB;
-    $sql = 'SELECT *
-            FROM {user}
-            where id = '.$id;
+    $sql = 'SELECT * FROM {user} where id = '.$id;
     $user = $DB->get_record_sql($sql);
     return $user;
 }
@@ -197,20 +15,17 @@ function getUserById($id){
 // Lấy những môn học chưa kết thúc dựa theo id giáo viên
 function getEnrolledCourseByUserID($userid){
     global $DB;
-    $sql = 'SELECT c.*
-            FROM {user_enrolments} ur
-            INNER JOIN {enrol} e ON e.id = ur.enrolid
-            INNER JOIN {course} c ON c.id = e.courseid
-            where userid = '.$userid.' and c.enddate > '.time();
+
+    $sql = "SELECT c.*
+    FROM {role_assignments} ra
+    INNER JOIN {context} co ON co.id = ra.contextid
+    INNER JOIN {course} c ON c.id = co.instanceid
+    INNER JOIN {role} r ON r.id = ra.roleid
+    where ra.userid = ".$userid." and c.enddate > ".time()
+    ." and (r.shortname = 'teacher' or r.shortname = 'editingteacher') ";
+
     $courses = $DB->get_records_sql($sql);
     return $courses;
-}
-
-function getMaiLHistory(){
-    global $DB;
-    $sql = 'SELECT * FROM  {block_elo_remind_teacher}';
-    $mailHistory = $DB->get_records_sql($sql);
-    return $mailHistory;
 }
 
 // Lấy những bài post chưa ẩn
@@ -231,20 +46,6 @@ function getPostsByDisscussionID($disscussionID,$teacherid){
     return count($posts) - count($gradedpost);
 }
 
-// function getSubmissionsByAssignmentID($assignment,$teacherid){
-//     global $DB;
-//     $sql = 'SELECT * FROM {assign_submission} where assignment = ? and status = "submitted" ';
-//     $posts = $DB->get_records_sql($sql,array($assignment->id));
-
-//     $sql = 'SELECT *
-//             FROM {assign_grades}
-//             where assignment = ? and grade >= 0';
-
-//     $gradedpost = $DB->get_records_sql($sql,array($assignment->id));
-//     return count($posts) - count($gradedpost);
-// }
-
-
 function getSubmissionsByAssignmentID($assignment){
     $needgrading = elo_get_needgradingsubmissionscount($assignment->cm);
     return $needgrading;
@@ -258,6 +59,13 @@ function elo_get_needgradingsubmissionscount($id) {
     $assign = new \assign($context, $cm, $course);
     $assignsumary = $assign->get_assign_grading_summary_renderable();
     return $assignsumary->submissionsneedgradingcount;
+}
+
+function getMaiLHistory(){
+    global $DB;
+    $sql = 'SELECT * FROM  {block_elo_remind_teacher}';
+    $mailHistory = $DB->get_records_sql($sql);
+    return $mailHistory;
 }
 
 function getLastSendMailTime($teacherID){
@@ -330,13 +138,13 @@ function getNotGradedYetActivities($activitie,$teacherid){
         case 'forum':
             $cm = get_coursemodule_from_instance($activitie->mod, $activitie->id);
             $discussions = forum_get_discussions($cm);
+            $posts = 0;
             foreach($discussions as  $discussion){
                 $posts = getPostsByDisscussionID($discussion->discussion,$teacherid);
             }
-            return $posts != null ? $posts : 0;
+            return $posts;
             break;
         case 'assign':
-            // return getSubmissionsByAssignmentID($activitie->id,$teacherid);
             return getSubmissionsByAssignmentID($activitie);
             break;
         default:
@@ -346,6 +154,13 @@ function getNotGradedYetActivities($activitie,$teacherid){
     }
     return;
 }   
+
+// SEND MAIL
+function elo_send_mail_to_user($touser,$fromuser){
+    [$subject, $fullmessage, $messagehtml] = renderMailContent($touser,$fromuser);
+    $success = email_to_user($touser, $fromuser, $subject, $fullmessage, $messagehtml);
+    return $success;
+}
 
 function renderMailContent($touser,$fromuser){
     global $OUTPUT;
@@ -377,41 +192,6 @@ function renderMailContent($touser,$fromuser){
     return [$subject, $message->fullmessage, $messagehtml];
 }
 
-// Send mail
-function elo_send_mail_to_user($touser,$fromuser){
-    // global $OUTPUT;
-    
-    // $EnrolledCourses = getEnrolledCourseByUserID($touser->id);
-    // $EnrolledCoursesHTMl = array();
-    // foreach($EnrolledCourses as $EnrolledCourse){
-    //     $course = new stdClass();
-    //     $course->name = $EnrolledCourse-> fullname;
-    //     $course->activities = getGradedActivitiesByCourseID($EnrolledCourse->id, $touser->id);
-    //     $EnrolledCoursesHTMl[] = $course;
-    // }
-
-    // $message = new stdClass();
-    // $messagetextdata = [
-    //     'fullname' => fullname($touser),
-    //     'message' => get_string('reminder:message', 'block_elo_remind_teacher_via_mail'),
-    //     'sign' => get_string('reminder:sign', 'block_elo_remind_teacher_via_mail'),
-    //     'ungradedCourse' => $EnrolledCoursesHTMl
-    // ];
-
-    // $subject = get_string('reminder:subject', 'block_elo_remind_teacher_via_mail');
-
-    // // Render message email body.
-    // $messagehtml = $OUTPUT->render_from_template('block_elo_remind_teacher_via_mail/email_reminder', $messagetextdata);
-    // $message->fullmessage = html_to_text($messagehtml);
-    // $message->fullmessagehtml = $messagehtml;
-
-    [$subject, $fullmessage, $messagehtml] = renderMailContent($touser,$fromuser);
-
-    $success = email_to_user($touser, $fromuser, $subject, $fullmessage, $messagehtml);
-
-    return $success;
-}
-
 function elo_sendmail_to_user($params){
     global $DB, $USER;
     $arrMailSucess = array();
@@ -428,9 +208,8 @@ function elo_sendmail_to_user($params){
 
             //Send mail
             $flagSucess = $userbyid->emailstop == 0 ? elo_send_mail_to_user($userbyid,$USER) : false;
-            
-            // $flagSucess = true;
             $now = time();
+            
             //Insert DB
             $dataobject = new stdClass();
             $dataobject->userfromid = $USER->id;
@@ -442,6 +221,7 @@ function elo_sendmail_to_user($params){
             }
             $index = $DB->insert_record('block_elo_remind_teacher',$dataobject);
             $lastsentmail = $dataobject->timecreated;
+
             //Valid
             $transaction->allow_commit();
         } catch (Exception $e) {
@@ -469,7 +249,7 @@ function elo_sendmail_to_user($params){
         $result = [
             'success' => [
                 'code' => 200,
-                'message' => get_string('send:success','block_elo_reminder_users'),
+                'message' => get_string('send:success','block_elo_remind_teacher_via_mail'),
                 'data' => [
                     'listusers' => $arrMailSucess,
                 ],
@@ -483,7 +263,7 @@ function elo_sendmail_to_user($params){
         $result = [
             'error' => [
                 'code' => 405,
-                'message' => get_string('send:failed','block_elo_reminder_users'),
+                'message' => get_string('send:failed','block_elo_remind_teacher_via_mail'),
                 'errors' => [
                     'listusers' => $arrMailFailed,
                 ]
@@ -491,4 +271,14 @@ function elo_sendmail_to_user($params){
         ];
     }
     return response_to_js($result);
+}
+
+function page_requires($PAGE){
+    // Add Datatatable jquery and css
+    $PAGE->requires->css('/blocks/elo_remind_teacher_via_mail/css/style.css', true);
+    $PAGE->requires->css('/blocks/elo_remind_teacher_via_mail/css/datatables.min.css', true);
+    $PAGE->requires->css('/blocks/elo_remind_teacher_via_mail/css/jquery.dataTables.min.css', true);
+    $PAGE->requires->css('/blocks/elo_remind_teacher_via_mail/css/fixedHeader.dataTables.min.css', true);
+    $PAGE->requires->css('/blocks/elo_remind_teacher_via_mail/css/select.dataTables.min.css', true);
+    $PAGE->requires->js_call_amd('block_elo_remind_teacher_via_mail/init', 'init', array());
 }

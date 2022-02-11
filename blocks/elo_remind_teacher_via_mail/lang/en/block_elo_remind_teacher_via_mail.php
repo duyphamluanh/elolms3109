@@ -35,7 +35,7 @@ $string['labelsendmaildelay'] = 'Trì hoãn gửi mail trong (số phút)';
 $string['descsendmaildelay'] = 'Khoảng thời gian trì hoãn giữa các lần gửi mail';
 
 $string['reminder:subject'] = 'Thư nhắc nhở chấm điểm các hoạt động của sinh viên';
-$string['reminder:message'] = 'Vui lòng đăng nhập để chấm điểm các hoạt động của sinh viên';
+$string['reminder:message'] = 'Hiện tại, một số sinh viên đã đăng/ nộp bài trên các hoạt động. Thầy/cô vui lòng đăng nhập để chấm điểm các hoạt động của sinh viên';
 $string['reminder:sign'] = 'TT.ĐTTT';
 $string['latest_send_mail'] = 'Latest mail sent';
 $string['stt'] = 'STT';
@@ -53,3 +53,4 @@ $string['time'] = 'Time';
 
 $string['teacherlist'] = 'Teacher list';
 $string['history'] = 'History';
+$string['topage'] = 'Switch to the student grading reminder page';

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/transfer_course/db" VERSION="20211005" COMMENT="XMLDB file for Moodle transfer_course block"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="transfer_course_dayoff" COMMENT="Store day off">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="date" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="event" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="year" TYPE="text" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="semester" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="unique-date" TYPE="unique" FIELDS="date"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

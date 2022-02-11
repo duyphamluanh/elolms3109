@@ -70,3 +70,4 @@ $string['activitive_enddate_col'] = 'End date';
 $string['activitive_completion_col'] = 'Completion';
 $string['keepstateoversession'] = 'Keep collapse state over session';
 $string['keepstateoversession_desc'] = 'If checked collapse state will be kept when the user logs out.';
+$string['deadline'] = 'Deadline';

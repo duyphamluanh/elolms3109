@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template block_elo_reminder_users/email_reminder
+    @template block_elo_remind_teacher_via_mail/email_reminder
 
     Email template for the data request processing results.
 
@@ -47,24 +47,21 @@
         }
     }
 }}
-<div>
+<div class="emailcontent">
     <p>Kính gửi Thầy/cô {{fullname}}</p>
     <br/>
     {{! <p> }}
     <div class="container">
     {{message}}
     {{#ungradedCourse}}
-        <h5>{{name}}</h5>
+        <h3>{{name}}</h3>
         {{#activities}}
             <p><a href="{{link}}">{{name}}</a> : {{notgradedActivities}}</p>
         {{/activities}}
     {{/ungradedCourse}}
     </div>
     {{! </p> }}
-    <br/>
     <p>Trân trọng,</p>
     <p>{{sign}}</p>
-
-
     <p>Vui lòng không trả lời email này.</p>
 </div>

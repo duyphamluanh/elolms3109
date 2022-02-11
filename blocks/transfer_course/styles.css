@@ -1,0 +1,14 @@
+.block_course_list .footer {
+    margin-top: 5px;
+}
+
+.block_course_list .content li {
+    margin-bottom: .3em;
+}
+
+#id_dayoff_add, #id_dayoff_addfromfile{
+    min-width: 120px;
+    color: #fff;
+    background-color: #1177d1;
+    border-color: #1177d1;
+}

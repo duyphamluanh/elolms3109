@@ -84,5 +84,5 @@ $templatecontext['flatnavigation'] = $nav;
 $templatecontext['firstcollectionlabel'] = $nav->get_collectionlabel();
 
 // Elo: Remove flat navigation items
-theme_eloteam_custom_flat_navigation($PAGE->flatnav);
+theme_custom_flat_navigation($PAGE->flatnav);
 echo $OUTPUT->render_from_template('theme_fordson/frontpage', $templatecontext);

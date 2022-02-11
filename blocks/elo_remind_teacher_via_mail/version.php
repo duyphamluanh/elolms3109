@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017011402;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2022010500;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2012112900;        // Requires this Moodle version
 $plugin->component = 'block_elo_remind_teacher_via_mail'; // Full name of the plugin (used for diagnostics)
